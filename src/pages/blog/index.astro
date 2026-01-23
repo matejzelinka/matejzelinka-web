@@ -1,0 +1,92 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+// načti články
+const posts = await getCollection("blog");
+
+// seřaď podle data (nejnovější první)
+posts.sort(
+  (a, b) =>
+    new Date(b.data.date).getTime() -
+    new Date(a.data.date).getTime()
+);
+---
+
+<BaseLayout>
+
+<!-- HERO -->
+<section class="px-6 pt-56 pb-24 md:px-12 lg:px-24 max-w-7xl mx-auto">
+
+  <div class="flex flex-col items-start gap-10">
+
+    <img
+      src="/mz-logo.png"
+      alt="Matěj Zelinka"
+      class="h-20 opacity-90"
+    />
+
+    <div class="max-w-3xl mt-6">
+
+      <h1
+        class="text-4xl md:text-5xl font-bold text-slate-100 leading-[1.15]"
+      >
+        Blog
+      </h1>
+
+      <p class="mt-6 text-slate-400 text-lg">
+        Postřehy z praxe: marketing, AI, projekty, komunikace a technologie.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- LIST -->
+<section class="px-6 pb-32 md:px-12 lg:px-24 max-w-7xl mx-auto">
+
+  <div class="flex flex-col gap-12">
+
+    {posts.map((post) => (
+      <article
+        class="flex flex-col md:flex-row gap-8 bg-slate-900/40 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur hover:border-indigo-500/40 transition"
+      >
+
+        <img
+          src={post.data.cover}
+          alt={post.data.title}
+          class="w-full md:w-[320px] h-56 object-cover"
+        />
+
+        <div class="p-8 flex flex-col justify-center">
+
+          <time class="text-xs text-slate-500 uppercase tracking-wide">
+            {new Date(post.data.date).toLocaleDateString("cs-CZ")}
+          </time>
+
+          <h2 class="mt-2 text-2xl font-semibold text-slate-100">
+            {post.data.title}
+          </h2>
+
+          <p class="mt-4 text-slate-400 max-w-2xl">
+            {post.data.excerpt}
+          </p>
+
+          <a
+            href={`/blog/${post.slug}`}
+            class="mt-6 inline-flex text-indigo-400 hover:text-indigo-300 font-medium"
+          >
+            Číst článek →
+          </a>
+
+        </div>
+      </article>
+    ))}
+
+  </div>
+
+</section>
+
+</BaseLayout>

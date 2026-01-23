@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+// Vygeneruj statické stránky pro všechny články
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+// Astro v5 render obsahu
+const { Content } = await post.render();
+const { data } = post;
+---
+
+<BaseLayout>
+
+<article class="px-6 pt-56 pb-32 md:px-12 lg:px-24 max-w-3xl mx-auto">
+
+  <!-- META -->
+  <div class="mb-10">
+    <span class="text-xs uppercase tracking-wide text-indigo-400">
+      {data.tag}
+    </span>
+
+    <time class="block mt-2 text-slate-500">
+      {data.date.toLocaleDateString("cs-CZ")}
+    </time>
+  </div>
+
+  <!-- TITLE -->
+  <h1 class="text-4xl md:text-5xl font-bold text-slate-100 leading-tight">
+    {data.title}
+  </h1>
+
+  <!-- HERO IMAGE -->
+  <img
+    src={data.cover}
+    alt={data.title}
+    class="mt-12 rounded-2xl w-full object-cover rounded-2xl"
+  />
+
+  <!-- CONTENT -->
+  <div class="prose prose-invert prose-slate mt-16 max-w-none">
+    <Content />
+  </div>
+
+</article>
+
+</BaseLayout>
