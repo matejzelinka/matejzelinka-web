@@ -1,4 +1,4 @@
-name: Sync Notion → Markdown
+name: Sync Notion to Markdown
 
 on:
   workflow_dispatch:
@@ -18,10 +18,10 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install deps
-  run: |
-    npm install
-    node -e "console.log('Notion version:', require('@notionhq/client/package.json').version)"
+      - name: Install dependencies
+        run: |
+          npm install
+          node -e "console.log('Notion version:', require('@notionhq/client/package.json').version)"
 
       - name: Run Notion sync
         env:
