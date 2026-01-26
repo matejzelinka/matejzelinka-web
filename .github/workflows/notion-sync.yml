@@ -19,7 +19,9 @@ jobs:
           node-version: "20"
 
       - name: Install deps
-        run: npm ci
+  run: |
+    npm install
+    node -e "console.log('Notion version:', require('@notionhq/client/package.json').version)"
 
       - name: Run Notion sync
         env:

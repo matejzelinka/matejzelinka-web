@@ -1,6 +1,5 @@
-import pkg from "@notionhq/client";
-import fs from "fs";
-import path from "path";
+import { Client } from "@notionhq/client";
+
 
 const { Client } = pkg;
 
