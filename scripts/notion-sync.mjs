@@ -53,21 +53,20 @@ async function fetchAllPages() {
   let cursor;
 
   while (true) {
-    const res = await notion.databases.query({
-  database_id: DATABASE_ID,
+    const res = await notion.dataSources.query({
+  data_source_id: dataSourceId,
   filter: {
     property: "Published",
-    checkbox: {
-      equals: true,
-    },
+    checkbox: { equals: true }
   },
   sorts: [
     {
       property: "Date",
-      direction: "descending",
-    },
-  ],
+      direction: "descending"
+    }
+  ]
 });
+
 
 
     results.push(...res.results);
