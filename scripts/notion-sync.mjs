@@ -92,7 +92,7 @@ async function main() {
     const slug = getText(props.Slug);
     const excerpt = getText(props.Excerpt);
     const date = getDate(props.Date);
-    const tags = getMultiSelect(props.Tag);
+    const tag = getMultiSelect(props.Tag)[0] || "ostatni";
     const cover = getFile(props.Cover);
     const seoTitle = getText(props["SEO Title"]);
     const seoDescription = getText(props["SEO Description"]);
@@ -103,24 +103,29 @@ async function main() {
     }
 
     const frontmatter = {
-      title,
-      excerpt,
-      date,
-      tags,
-      cover,
-      seoTitle,
-      seoDescription,
-    };
+  title,
+  excerpt,
+  date,
+  tag,
+  cover,
+  seoTitle,
+  seoDescription,
+};
+
 
     const yaml =
       "---\n" +
       Object.entries(frontmatter)
         .filter(([, v]) => v)
-        .map(([k, v]) =>
-          Array.isArray(v)
-            ? `${k}: [${v.map((x) => `"${x}"`).join(", ")}]`
-            : `${k}: "${String(v).replace(/"/g, '\\"')}"`
-        )
+        .map(([k, v]) => {
+  if (k === "date") {
+    return `${k}: ${v}`;
+  }
+
+  return `${k}: "${String(v).replace(/"/g, '\\"')}"`;
+})
+
+
         .join("\n") +
       "\n---\n\n";
 
