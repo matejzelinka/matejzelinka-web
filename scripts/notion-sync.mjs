@@ -6,6 +6,9 @@ const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 });
 
+console.log("DEBUG notion keys:", Object.keys(notion));
+console.log("DEBUG notion.databases:", notion.databases);
+
 const databaseId = process.env.NOTION_DB_ID;
 
 const OUTPUT_DIR = "./src/content/blog";
