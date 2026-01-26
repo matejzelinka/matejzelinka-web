@@ -1,14 +1,16 @@
-import { Client } from "@notionhq/client";
+import pkg from "@notionhq/client";
 import fs from "fs";
 import path from "path";
 
-const notion = new Client({ auth: process.env.NOTION_TOKEN });
+const { Client } = pkg;
+
+const notion = new Client({
+  auth: process.env.NOTION_TOKEN,
+});
+
 const databaseId = process.env.NOTION_DB_ID;
 
-const OUTPUT_DIR = path.join(
-  process.cwd(),
-  "src/content/blog"
-);
+const OUTPUT_DIR = path.join(process.cwd(), "src/content/blog");
 
 async function fetchAllPages() {
   const pages = [];
@@ -67,10 +69,7 @@ async function main() {
 
     const fm = frontmatter(page);
 
-    const filePath = path.join(
-      OUTPUT_DIR,
-      `${slug}.md`
-    );
+    const filePath = path.join(OUTPUT_DIR, `${slug}.md`);
 
     fs.writeFileSync(filePath, fm);
     console.log("✔ wrote", slug);
