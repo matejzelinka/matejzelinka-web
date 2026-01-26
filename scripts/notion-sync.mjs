@@ -6,42 +6,64 @@ const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 });
 
-console.log("DEBUG notion keys:", Object.keys(notion));
-console.log("DEBUG notion.databases:", notion.databases);
+const DATABASE_ID = process.env.NOTION_DB_ID;
 
-const databaseId = process.env.NOTION_DB_ID;
+const OUTPUT_DIR = "src/content/blog";
 
-const OUTPUT_DIR = "./src/content/blog";
+function getText(prop) {
+  if (!prop) return "";
+  if (prop.type === "title")
+    return prop.title.map((t) => t.plain_text).join("");
+  if (prop.type === "rich_text")
+    return prop.rich_text.map((t) => t.plain_text).join("");
+  return "";
+}
+
+function getDate(prop) {
+  return prop?.date?.start || null;
+}
+
+function getCheckbox(prop) {
+  return prop?.checkbox === true;
+}
+
+function getMultiSelect(prop) {
+  return prop?.multi_select?.map((t) => t.name) || [];
+}
+
+function getFile(prop) {
+  const file = prop?.files?.[0];
+  if (!file) return null;
+  return file.type === "external"
+    ? file.external.url
+    : file.file.url;
+}
 
 async function fetchAllPages() {
-  const pages = [];
-  let cursor = undefined;
+  let results = [];
+  let cursor;
 
   while (true) {
-    const res = await notion.dataSources.query({
-  data_source_id: databaseId,
-  start_cursor: cursor,
-  page_size: 100,
-});
+    const res = await notion.databases.query({
+      database_id: DATABASE_ID,
+      start_cursor: cursor,
+      filter: {
+        property: "Published",
+        checkbox: { equals: true },
+      },
+    });
 
-
-    pages.push(...res.results);
+    results.push(...res.results);
 
     if (!res.has_more) break;
     cursor = res.next_cursor;
   }
 
-  return pages;
-}
-
-function richTextToPlain(richText = []) {
-  return richText.map(t => t.plain_text).join("");
+  return results;
 }
 
 async function main() {
-  if (!databaseId) {
-    throw new Error("Missing NOTION_DB_ID");
-  }
+  console.log("→ Fetching Notion blog posts…");
 
   const pages = await fetchAllPages();
 
@@ -50,33 +72,51 @@ async function main() {
   for (const page of pages) {
     const props = page.properties;
 
-    const title = richTextToPlain(props.Title.title);
-    const slug = richTextToPlain(props.Slug.rich_text);
-    const excerpt = richTextToPlain(props.Excerpt.rich_text);
-    const cover = props.Cover?.files?.[0]?.external?.url || "";
-    const date = props.Date?.date?.start;
+    const title = getText(props.Title);
+    const slug = getText(props.Slug);
+    const excerpt = getText(props.Excerpt);
+    const date = getDate(props.Date);
+    const tags = getMultiSelect(props.Tag);
+    const cover = getFile(props.Cover);
+    const seoTitle = getText(props["SEO Title"]);
+    const seoDescription = getText(props["SEO Description"]);
 
-    if (!slug || !title) continue;
+    if (!slug) {
+      console.warn(`⚠️ Skipping "${title}" – missing slug`);
+      continue;
+    }
 
-    const md = `---
-title: "${title}"
-slug: "${slug}"
-excerpt: "${excerpt}"
-cover: "${cover}"
-date: "${date}"
----
+    const frontmatter = {
+      title,
+      excerpt,
+      date,
+      tags,
+      cover,
+      seoTitle,
+      seoDescription,
+    };
 
-${excerpt}
-`;
+    const yaml =
+      "---\n" +
+      Object.entries(frontmatter)
+        .filter(([, v]) => v)
+        .map(([k, v]) =>
+          Array.isArray(v)
+            ? `${k}: [${v.map((x) => `"${x}"`).join(", ")}]`
+            : `${k}: "${String(v).replace(/"/g, '\\"')}"`
+        )
+        .join("\n") +
+      "\n---\n\n";
 
     const filePath = path.join(OUTPUT_DIR, `${slug}.md`);
-    await fs.writeFile(filePath, md);
 
-    console.log("Synced:", slug);
+    await fs.writeFile(filePath, yaml + "# " + title);
+
+    console.log("✓ synced:", slug);
   }
 }
 
-main().catch(err => {
+main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
