@@ -7,7 +7,6 @@ const notion = new Client({
 });
 
 const DATABASE_ID = process.env.NOTION_DB_ID;
-
 const OUTPUT_DIR = "src/content/blog";
 
 function getText(prop) {
@@ -23,10 +22,6 @@ function getDate(prop) {
   return prop?.date?.start || null;
 }
 
-function getCheckbox(prop) {
-  return prop?.checkbox === true;
-}
-
 function getMultiSelect(prop) {
   return prop?.multi_select?.map((t) => t.name) || [];
 }
@@ -40,12 +35,26 @@ function getFile(prop) {
 }
 
 async function fetchAllPages() {
+  console.log("→ resolving data source…");
+
+  const db = await notion.databases.retrieve({
+    database_id: DATABASE_ID,
+  });
+
+  const dataSourceId = db.data_sources?.[0]?.id;
+
+  if (!dataSourceId) {
+    throw new Error("Database has no data_sources");
+  }
+
+  console.log("→ data source:", dataSourceId);
+
   let results = [];
   let cursor;
 
   while (true) {
-    const res = await notion.databases.query({
-      database_id: DATABASE_ID,
+    const res = await notion.dataSources.query({
+      data_source_id: dataSourceId,
       start_cursor: cursor,
       filter: {
         property: "Published",
