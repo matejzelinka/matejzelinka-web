@@ -18,11 +18,12 @@ async function fetchAllPages() {
   let cursor = undefined;
 
   while (true) {
-    const res = await notion.databases.query({
-      database_id: databaseId,
-      start_cursor: cursor,
-      page_size: 100,
-    });
+    const res = await notion.dataSources.query({
+  data_source_id: databaseId,
+  start_cursor: cursor,
+  page_size: 100,
+});
+
 
     pages.push(...res.results);
 
