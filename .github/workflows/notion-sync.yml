@@ -27,8 +27,7 @@ jobs:
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_DB_ID: ${{ secrets.NOTION_DB_ID }}
-        run: node scripts/debug-notion.mjs
-
+        run: node scripts/notion-sync.mjs
 
       - name: Commit changes
         run: |
