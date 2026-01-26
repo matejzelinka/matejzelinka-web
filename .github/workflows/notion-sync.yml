@@ -1,4 +1,4 @@
-name: Sync Notion to Markdown
+name: Sync Notion → Build → Deploy
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     - cron: "*/30 * * * *"
 
 jobs:
-  sync:
+  sync-build-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,10 +18,8 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install dependencies
-        run: |
-          npm install
-          node -e "console.log('Notion version:', require('@notionhq/client/package.json').version)"
+      - name: Install deps
+        run: npm ci
 
       - name: Run Notion sync
         env:
@@ -29,10 +27,22 @@ jobs:
           NOTION_DB_ID: ${{ secrets.NOTION_DB_ID }}
         run: node scripts/notion-sync.mjs
 
-      - name: Commit changes
+      - name: Commit content changes
         run: |
           git config user.name "notion-bot"
           git config user.email "notion-bot@users.noreply.github.com"
           git add src/content/blog
           git diff --cached --quiet || git commit -m "Sync blog from Notion"
           git push
+
+      - name: Build site
+        run: npm run build
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: dist/
+          server-dir: ${{ secrets.FTP_PATH }}/
