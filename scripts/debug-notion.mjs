@@ -4,21 +4,15 @@ const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 });
 
-const pageId =
-  "2f14ce806d3880b0a6e1f32344f5cc25";
+const databaseId = "2f14ce806d3880b0a6e1f32344f5cc25";
 
 async function run() {
-  const page = await notion.pages.retrieve({
-    page_id: pageId,
+  const db = await notion.databases.retrieve({
+    database_id: databaseId,
   });
 
-  console.log("PAGE:", page);
-
-  const children = await notion.blocks.children.list({
-    block_id: pageId,
-  });
-
-  console.log("CHILDREN:", children);
+  console.log("DATABASE OBJECT:");
+  console.log(JSON.stringify(db, null, 2));
 }
 
 run();
