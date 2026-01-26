@@ -2,7 +2,6 @@ import { Client } from "@notionhq/client";
 import fs from "fs";
 import path from "path";
 
-const { Client } = pkg;
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
