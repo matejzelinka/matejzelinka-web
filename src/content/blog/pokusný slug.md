@@ -1,0 +1,9 @@
+---
+title: "Test článku – pipeline funguje."
+excerpt: "pokus excerpt"
+date: 2026-01-26
+tag: "ostatni"
+cover: "https://prod-files-secure.s3.us-west-2.amazonaws.com/bad4ce80-6d38-815e-b21d-0003cc2daa50/86d46020-7629-42c9-9238-4792d2843bb8/neporazitelni-04.02.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466YEU7MG7R%2F20260127%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260127T095454Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEIr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQC6JP%2F%2FjSdNJpQZ%2BNVr%2FpOJV9SYGB%2BDVlI0Njj57qWdZwIhAJmqPeLc98mCxb9OjfKLXBslAdXeDNuqZToIQHM9OBBOKv8DCFMQABoMNjM3NDIzMTgzODA1Igzd66cej1NfwMvjEE8q3AOttmivXEB0u5HtpNQnBc4rayZhG8fH4LCcR5pnSPHeFoDz7yfCLRto2kfu9e6bzHmTQA%2FpCE7TmL7VC%2FROZCTJjia3r5vS7zf2lEhDbLQhLlfl1KqdgjwseRFTup9rdt30h2BTGtGc%2BgK1%2FDEyfbhGD6lck5yR5giDM%2BNuPCzxxwV%2B52IIh7Fec8rwUga%2Fwj7IQJFrZCdiND9oxnBH2NcXRN219tgEPEJgAwo0bQJatJ4GNgd5XSppdocM3A3ZVAojZARdgkdKRK3IolDyoBCw4%2FWXbvXeKpTwn60UGQ0Zu%2BiTBB%2F%2FoQQMKi%2Fx3X5kYoSbFxaOPBJpJD11lMU5OUfIQh29VVaKLj%2FzCSfImHhVUxMV3H7tYRZFvcnXaFBM2lc6jWI9f1hIlzB04C1SMey%2FR%2BMRFmbIL5VUZGaL9ICrBOT53pHhDplenelJNNAqio1r3jHprxU8sgezhqYggVHJpZZ%2F6Gh7kee%2Fa7xWE0UCW6kg4QnwX%2Fl2V6dEynTFK%2FI05NTgJf4r53N9LIKtoIeWE610GxuXItTurC6AarS91QAPX0neV7utWWxJGddi%2FzC%2Fw%2BxeU1vfbP5PYLvxqRtQvitT5FiR0l%2BYlet2KIRG%2FDM%2FeLuJ4gxS6HNMtjD0h%2BLLBjqkAXp9d1h4MpZGvrWSciTqe1%2FORrRdI%2Bl37vzxGLnpZgrf2l1QPMlvnFwZOjFYVgMjepisXni37US3Htzg4t9vO%2F6XXZ8shQvEssiyyvcRYchj9hJwgELH2LmFSJuYbq0pKBNvhutw7NmZ%2FsJoM2ElpozA6tSH0K%2BQtt1a%2Fg%2FrMyPMC6p%2FcgFzqjsCW2WX6oZcwdrDnNRrowBMOGZ%2BwbIH8D8pJazC&X-Amz-Signature=03bef90783d30a5b920591d82c12d3eebeb13c9a824fbcebdde696ed25c6b8af&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+---
+
+# Test článku – pipeline funguje.
