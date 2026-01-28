@@ -1,0 +1,11 @@
+---
+title: "Jak vznikal web www.matejzelinka.cz?"
+excerpt: "Byla to poměrně dlouhá a strastiplná cesta. Nebýt dnešních AI možností, tak do toho asi nejdu. Ale s výsledkem jsem spokojený. Doufám, že i vy. A pokud se do něčeho podobného chcete pustit, "
+date: 2026-01-28
+tag: "Projekty"
+cover: "https://prod-files-secure.s3.us-west-2.amazonaws.com/bad4ce80-6d38-815e-b21d-0003cc2daa50/adff74a8-d173-485d-9beb-fac13b8fd588/1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TUQPNCOU%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T152054Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQCgfCWVKWb1yINn8cAua5GiMFav5W8hGllc5vCXiPUybAIgE0qCUSBBVDVQk%2B6afI8cX%2FsNGSoa4vd8n1cbWFAK96gq%2FwMIbxAAGgw2Mzc0MjMxODM4MDUiDFX31oXf1waoa8jzCCrcA1TVGO%2BNfrtoEu6S0nZdPiy4gxldrmVYpuHc54LGiX6C%2Beep7GMYZOF8yjYQf881GoFoO9MV5IonCUFK8eYvX%2F%2FyjXBPWzkMRNifz1kwgK6W9KHb2mL9bdYWCl1X4j%2FbvLQkjI8S%2FJCSBSnlPt1mGaEYwNN%2BYUwF5CgkiVz4QXAMm%2Bmtj89Wym1EfVX0t4LBvcGjzhuyKmmIRny3hmKnVVQTtgGnHvGaySJN6gh8lqN32xLy2gpDEcycjM7fCcjb8L0eb73HFWR81IA9w8lDCbnMgwt8RkRRFBKfXttuQRGhL%2BCXj4ZN9BQ41wKuhuLfbeWceRmLGCHTljvdgr5WkqbZi7mkU5FP6yvUqhcdyzo5UyaqT0%2Ft1blDEBZ%2B8NeJItF5qYHr%2Fgepey1YT%2B%2FrpMU0H%2BODfTG3ZvpfSKYnDJmw8LIrty0nfm%2BRLC9uwQofGO61JsDvWa8Ht8MnbuPIZD2PijWh%2FDviWXWA1XCkJpITF9KdgWtEG9cV3lqfOzsWJY8R%2BPYKCJRUO2m6YO99MAeZ1p%2F7qp7YzeQXO57bjvhIgK7vSQtdgmA5fFTK36o2qhA1UHwU2eQulvv5cOeza2vicphYqSzxo2vWeCZhgsKJ5Ta670oIYenKJTe1MIKn6MsGOqUBwHUq%2FPc3xxXyTwx3W1QxiO%2Fzfq7279WUt%2FD52CfggCL%2F2UhvfV3nibMkUOoiLaJYhZocsVGPRq1%2FBmH2q303b6QVoGMehE%2BPXBmB7nQxB6jocQzoGpNLoUiQFeRpLb%2FCf%2BgMV99GqMz0iQB%2BEPxO3FYBptRuz%2F9fWc4oF72VyzyVpzz6UVwNK%2Bbt7IJC55OTeUMa61i3MWdpbE5F7CENBFUl02tR&X-Amz-Signature=5326ac91d529e97ddadc908e1b6af47986918146a8f98a8953ae5afeb47821ba&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+seoTitle: ""
+seoDescription: ""
+---
+
+# Jak vznikal web www.matejzelinka.cz?
