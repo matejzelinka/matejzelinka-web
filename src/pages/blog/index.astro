@@ -1,87 +1,198 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import Layout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
-// načti články
+// načtení článků z Notion syncu
 const posts = await getCollection("blog");
 
-// seřaď podle data (nejnovější první)
-posts.sort(
-  (a, b) =>
-    new Date(b.data.date).getTime() -
-    new Date(a.data.date).getTime()
-);
+// seřazení
+const sorted = posts
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+
+// sesbírání unikátních tagů
+const allTags = Array.from(
+  new Set(sorted.flatMap((p) => p.data.tags ?? []))
+).sort();
+
+// tag z URL
+const { searchParams } = Astro.url;
+const activeTag = searchParams.get("tag");
+
+// filtrování
+const visiblePosts = activeTag
+  ? sorted.filter((p) => p.data.tags?.includes(activeTag))
+  : sorted;
 ---
 
-<BaseLayout>
+<Layout title="Blog | Matěj Zelinka">
 
-<!-- HERO -->
-<section class="px-6 pt-56 pb-24 md:px-12 lg:px-24 max-w-7xl mx-auto">
+<!-- ================= BLOG HERO (TVŮJ FINÁL) ================= -->
 
-  <div class="flex flex-col items-start gap-10">
+<section
+  id="blog-hero"
+  class="relative mx-auto max-w-7xl px-6 pt-28 pb-20 overflow-hidden"
+>
+  <!-- Gradient base -->
+  <div class="absolute inset-0 -z-20 bg-gradient-to-b from-indigo-500/10 via-transparent to-transparent"></div>
 
+  <!-- Grid overlay -->
+  <div
+    class="absolute inset-0 -z-20 opacity-[0.06]"
+    style="
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.12) 1px, transparent 1px);
+      background-size: 72px 72px;
+    "
+  ></div>
+
+  <!-- Noise -->
+  <div
+    class="pointer-events-none absolute inset-0 -z-10 opacity-[0.025]"
+    style="
+      background-image: url('data:image/svg+xml;utf8,\
+<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\">\
+<filter id=\"n\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"4\" stitchTiles=\"stitch\"/></filter>\
+<rect width=\"100%\" height=\"100%\" filter=\"url(%23n)\" opacity=\"0.4\"/>\
+</svg>');
+    "
+  ></div>
+
+  <!-- Ambient blobs -->
+  <div
+    class="absolute -top-48 -right-48 w-[420px] h-[420px] bg-indigo-600/15 blur-[160px] rounded-full -z-10"
+  ></div>
+
+  <div
+    id="blog-ambient"
+    class="absolute top-1/2 -left-40 w-[360px] h-[360px] bg-fuchsia-600/10 blur-[160px] rounded-full -z-20"
+  ></div>
+
+  <!-- Logo -->
+  <div class="mb-10 relative z-10">
     <img
       src="/mz-logo.png"
-      alt="Matěj Zelinka"
-      class="h-20 opacity-90"
+      alt="Matěj Zelinka logo"
+      class="h-16 md:h-20 w-auto drop-shadow-[0_0_22px_rgba(99,102,241,0.35)]"
     />
-
-    <div class="max-w-3xl mt-6">
-
-      <h1
-        class="text-4xl md:text-5xl font-bold text-slate-100 leading-[1.15]"
-      >
-        Blog
-      </h1>
-
-      <p class="mt-6 text-slate-400 text-lg">
-        Postřehy z praxe: marketing, AI, projekty, komunikace a technologie.
-      </p>
-
-    </div>
-
   </div>
 
+  <!-- Heading -->
+  <header class="relative z-10 max-w-3xl">
+    <h1
+      class="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight"
+    >
+      Blog
+    </h1>
+
+    <p class="mt-6 text-lg text-slate-400">
+      Eseje, případové studie a dlouhé texty o marketingu,
+      veřejné komunikaci a technologiích.
+    </p>
+  </header>
+
+  <!-- Motion script -->
+  <script is:inline>
+    const ambient = document.getElementById("blog-ambient");
+    const hero = document.getElementById("blog-hero");
+
+    let mouseX = -999;
+    let mouseY = -999;
+
+    hero.addEventListener("mousemove", (e) => {
+      const rect = hero.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+    });
+
+    hero.addEventListener("mouseleave", () => {
+      mouseX = -999;
+      mouseY = -999;
+    });
+
+    function animate() {
+      if (ambient) {
+        ambient.style.transform =
+          "translate(" + mouseX * 0.015 + "px, " + mouseY * 0.015 + "px)";
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </section>
 
-<!-- LIST -->
-<section class="px-6 pb-32 md:px-12 lg:px-24 max-w-7xl mx-auto">
+<!-- ================= TAG FILTR (EDITORIAL) ================= -->
 
-  <div class="flex flex-col gap-12">
+<header class="mx-auto max-w-7xl px-6 pb-6 text-sm text-slate-400">
+  <nav class="flex flex-wrap gap-x-3 gap-y-2">
 
-    {posts.map((post) => (
-      <article
-        class="flex flex-col md:flex-row gap-8 bg-slate-900/40 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur hover:border-indigo-500/40 transition"
+    <a
+      href="/blog"
+      class={`hover:text-slate-200 hover:underline underline-offset-2 ${
+        !activeTag ? "text-slate-200 font-medium" : ""
+      }`}
+    >
+      Vše
+    </a>
+
+    {allTags.map((tag) => (
+      <a
+        href={`/blog?tag=${encodeURIComponent(tag)}`}
+        class={`hover:text-slate-200 hover:underline underline-offset-2 ${
+          activeTag === tag ? "text-slate-200 font-medium" : ""
+        }`}
       >
+        {tag}
+      </a>
+    ))}
 
-        <img
-          src={post.data.cover}
-          alt={post.data.title}
-          class="w-full md:w-[320px] h-56 object-cover"
-        />
+  </nav>
+</header>
 
-        <div class="p-8 flex flex-col justify-center">
+<!-- ================= GRID ČLÁNKŮ ================= -->
 
-          <time class="text-xs text-slate-500 uppercase tracking-wide">
-            {new Date(post.data.date).toLocaleDateString("cs-CZ")}
-          </time>
+<section class="mx-auto max-w-7xl px-6 pb-32">
 
-          <h2 class="mt-2 text-2xl font-semibold text-slate-100">
-            {post.data.title}
-          </h2>
+  <div class="grid gap-x-10 gap-y-20 sm:grid-cols-2 lg:grid-cols-3">
 
-          <p class="mt-4 text-slate-400 max-w-2xl">
-            {post.data.excerpt}
-          </p>
+    {visiblePosts.map((post) => (
+      <article class="group flex flex-col">
 
+        <a
+          href={`/blog/${post.slug}`}
+          class="relative mb-6 aspect-[16/11] overflow-hidden rounded-2xl bg-zinc-900"
+        >
+          <img
+            src={post.data.cover}
+            alt={post.data.title}
+            class="h-full w-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.05]"
+          />
+
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        </a>
+
+        <h3 class="text-xl font-medium leading-snug">
           <a
             href={`/blog/${post.slug}`}
-            class="mt-6 inline-flex text-indigo-400 hover:text-indigo-300 font-medium"
+            class="hover:underline underline-offset-4 decoration-zinc-500"
           >
-            Číst článek →
+            {post.data.title}
           </a>
+        </h3>
 
+        <p class="mt-3 text-sm text-zinc-400 line-clamp-3">
+          {post.data.excerpt}
+        </p>
+
+        <div class="mt-6 flex items-center gap-4 text-xs text-zinc-500">
+          <time>{post.data.date}</time>
+          <span>•</span>
+          <span>{post.data.readingTime} min</span>
         </div>
+
       </article>
     ))}
 
@@ -89,4 +200,4 @@ posts.sort(
 
 </section>
 
-</BaseLayout>
+</Layout>
