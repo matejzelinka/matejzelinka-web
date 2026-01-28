@@ -92,8 +92,9 @@ async function main() {
     const slug = getText(props.Slug);
     const excerpt = getText(props.Excerpt);
     const date = getDate(props.Date);
-    const tags = getMultiSelect(props.Tag);
-const tag = tags[0];
+    const tagArr = getMultiSelect(props.Tag);
+const tag = tagArr.length ? tagArr[0] : "";
+
     const cover = getFile(props.Cover);
     const seoTitle = getText(props["SEO Title"]);
     const seoDescription = getText(props["SEO Description"]);
@@ -114,21 +115,17 @@ const tag = tags[0];
 };
 
 
-    const yaml =
+  const yaml =
   "---\n" +
   Object.entries(frontmatter)
+    .filter(([, v]) => v !== undefined && v !== null)
     .map(([k, v]) => {
-      if (v === undefined || v === null) return null;
-
-      if (k === "date") {
-        return `${k}: ${v}`;
-      }
-
+      if (k === "date") return `${k}: ${v}`;
       return `${k}: "${String(v).replace(/"/g, '\\"')}"`;
     })
-    .filter(Boolean)
     .join("\n") +
   "\n---\n\n";
+
 
 
     const filePath = path.join(OUTPUT_DIR, `${slug}.md`);
