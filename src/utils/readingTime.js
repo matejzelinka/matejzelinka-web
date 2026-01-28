@@ -1,5 +1,10 @@
 export function calculateReadingTime(text) {
-  const wordsPerMinute = 190; // čeština trochu pomalejší
+  if (!text || typeof text !== "string") {
+    return 1;
+  }
+
+  const wordsPerMinute = 190; // čeština
   const words = text.trim().split(/\s+/).length;
+
   return Math.max(1, Math.round(words / wordsPerMinute));
 }
