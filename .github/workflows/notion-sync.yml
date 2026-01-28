@@ -38,7 +38,7 @@ jobs:
       - name: Build site
         run: npm run build
 
-      - name: Deploy via FTP
+      - name: Deploy via FTP (clean)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
@@ -46,3 +46,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: dist/
           server-dir: ${{ secrets.FTP_PATH }}/
+          dangerous-clean-slate: true
