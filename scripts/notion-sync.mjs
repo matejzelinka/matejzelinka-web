@@ -9,6 +9,8 @@ const notion = new Client({
 const DATABASE_ID = process.env.NOTION_DB_ID;
 const OUTPUT_DIR = "src/content/blog";
 
+/* ================= HELPERS ================= */
+
 function getText(prop) {
   if (!prop) return "";
   if (prop.type === "title")
@@ -34,6 +36,66 @@ function getFile(prop) {
     : file.file.url;
 }
 
+/* ================= CONTENT ================= */
+
+// stáhne bloky (obsah článku)
+async function fetchPageContent(pageId) {
+  const blocks = [];
+  let cursor;
+
+  while (true) {
+    const res = await notion.blocks.children.list({
+      block_id: pageId,
+      start_cursor: cursor,
+    });
+
+    blocks.push(...res.results);
+
+    if (!res.has_more) break;
+    cursor = res.next_cursor;
+  }
+
+  return blocks;
+}
+
+// základní převod Notion bloků → Markdown
+function blocksToMarkdown(blocks) {
+  return blocks
+    .map((block) => {
+      if (block.type === "paragraph") {
+        return block.paragraph.rich_text
+          .map((t) => t.plain_text)
+          .join("");
+      }
+
+      if (block.type === "heading_1") {
+        return "# " + block.heading_1.rich_text.map(t => t.plain_text).join("");
+      }
+
+      if (block.type === "heading_2") {
+        return "## " + block.heading_2.rich_text.map(t => t.plain_text).join("");
+      }
+
+      if (block.type === "heading_3") {
+        return "### " + block.heading_3.rich_text.map(t => t.plain_text).join("");
+      }
+
+      if (block.type === "bulleted_list_item") {
+        return "- " + block.bulleted_list_item.rich_text.map(t => t.plain_text).join("");
+      }
+
+      if (block.type === "numbered_list_item") {
+        return "1. " + block.numbered_list_item.rich_text.map(t => t.plain_text).join("");
+      }
+
+      return "";
+    })
+    .filter(Boolean)
+    .join("\n\n");
+}
+
+/* ================= DATA SOURCE ================= */
+
 async function fetchAllPages() {
   console.log("→ resolving data source…");
 
@@ -50,33 +112,31 @@ async function fetchAllPages() {
   console.log("→ data source:", dataSourceId);
 
   let results = [];
-  let cursor;
 
   while (true) {
     const res = await notion.dataSources.query({
-  data_source_id: dataSourceId,
-  filter: {
-    property: "Published",
-    checkbox: { equals: true }
-  },
-  sorts: [
-    {
-      property: "Date",
-      direction: "descending"
-    }
-  ]
-});
-
-
+      data_source_id: dataSourceId,
+      filter: {
+        property: "Published",
+        checkbox: { equals: true },
+      },
+      sorts: [
+        {
+          property: "Date",
+          direction: "descending",
+        },
+      ],
+    });
 
     results.push(...res.results);
 
     if (!res.has_more) break;
-    cursor = res.next_cursor;
   }
 
   return results;
 }
+
+/* ================= MAIN ================= */
 
 async function main() {
   console.log("→ Fetching Notion blog posts…");
@@ -102,33 +162,35 @@ async function main() {
       continue;
     }
 
+    // 👉 TADY SE TAHA OBSAH
+    const blocks = await fetchPageContent(page.id);
+    const content = blocksToMarkdown(blocks);
+
     const frontmatter = {
-  title,
-  excerpt,
-  date,
-  tag,
-  cover,
-  seoTitle,
-  seoDescription,
-};
+      title,
+      excerpt,
+      date,
+      tag,
+      cover,
+      seoTitle,
+      seoDescription,
+    };
 
-
-  const yaml =
-  "---\n" +
-  Object.entries(frontmatter)
-    .filter(([, v]) => v !== undefined && v !== null)
-    .map(([k, v]) => {
-      if (k === "date") return `${k}: ${v}`;
-      return `${k}: "${String(v).replace(/"/g, '\\"')}"`;
-    })
-    .join("\n") +
-  "\n---\n\n";
-
-
+    const yaml =
+      "---\n" +
+      Object.entries(frontmatter)
+        .filter(([, v]) => v !== undefined && v !== null && v !== "")
+        .map(([k, v]) => {
+          if (k === "date") return `${k}: ${v}`;
+          return `${k}: "${String(v).replace(/"/g, '\\"')}"`;
+        })
+        .join("\n") +
+      "\n---\n\n";
 
     const filePath = path.join(OUTPUT_DIR, `${slug}.md`);
 
-    await fs.writeFile(filePath, yaml + "# " + title);
+    // 👉 TADY SE ZAPISUJE CONTENT
+    await fs.writeFile(filePath, yaml + content);
 
     console.log("✓ synced:", slug);
   }
