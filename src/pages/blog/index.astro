@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { calculateReadingTime } from "../../utils/readingTime";
 
 // načtení článků z Notion syncu
 const posts = await getCollection("blog");
@@ -10,19 +11,13 @@ const sorted = posts
   .filter((p) => !p.data.draft)
   .sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
 
-// sesbírání unikátních tagů
-const allTags = Array.from(
-  new Set(sorted.flatMap((p) => p.data.tags ?? []))
-).sort();
+const visiblePosts = sorted.map((post) => ({
+  ...post,
+  readingTime: calculateReadingTime(post.body),
+}));
 
-// tag z URL
-const { searchParams } = Astro.url;
-const activeTag = searchParams.get("tag");
 
-// filtrování
-const visiblePosts = activeTag
-  ? sorted.filter((p) => p.data.tags?.includes(activeTag))
-  : sorted;
+
 ---
 
 <Layout title="Blog | Matěj Zelinka">
@@ -86,10 +81,6 @@ const visiblePosts = activeTag
       Blog
     </h1>
 
-    <p class="mt-6 text-lg text-slate-400">
-      Eseje, případové studie a dlouhé texty o marketingu,
-      veřejné komunikaci a technologiích.
-    </p>
   </header>
 
   <!-- Motion script -->
@@ -124,73 +115,66 @@ const visiblePosts = activeTag
   </script>
 </section>
 
-<!-- ================= TAG FILTR (EDITORIAL) ================= -->
-
-<header class="mx-auto max-w-7xl px-6 pb-6 text-sm text-slate-400">
-  <nav class="flex flex-wrap gap-x-3 gap-y-2">
-
-    <a
-      href="/blog"
-      class={`hover:text-slate-200 hover:underline underline-offset-2 ${
-        !activeTag ? "text-slate-200 font-medium" : ""
-      }`}
-    >
-      Vše
-    </a>
-
-    {allTags.map((tag) => (
-      <a
-        href={`/blog?tag=${encodeURIComponent(tag)}`}
-        class={`hover:text-slate-200 hover:underline underline-offset-2 ${
-          activeTag === tag ? "text-slate-200 font-medium" : ""
-        }`}
-      >
-        {tag}
-      </a>
-    ))}
-
-  </nav>
-</header>
-
 <!-- ================= GRID ČLÁNKŮ ================= -->
 
 <section class="mx-auto max-w-7xl px-6 pb-32">
 
-  <div class="grid gap-x-10 gap-y-20 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="grid gap-y-20">
 
     {visiblePosts.map((post) => (
-      <article class="group flex flex-col">
+      <article class="group grid gap-8 lg:grid-cols-12 items-start">
 
+        <!-- IMAGE -->
         <a
           href={`/blog/${post.slug}`}
-          class="relative mb-6 aspect-[16/11] overflow-hidden rounded-2xl bg-zinc-900"
+          class="relative overflow-hidden rounded-xl bg-zinc-900 lg:col-span-4 aspect-[16/9]"
+
         >
           <img
             src={post.data.cover}
             alt={post.data.title}
-            class="h-full w-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.05]"
+            class="h-full w-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.03]"
           />
 
-          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
         </a>
 
-        <h3 class="text-xl font-medium leading-snug">
-          <a
-            href={`/blog/${post.slug}`}
-            class="hover:underline underline-offset-4 decoration-zinc-500"
-          >
-            {post.data.title}
-          </a>
-        </h3>
+        <!-- CONTENT -->
+        <div class="lg:col-span-8 flex flex-col justify-center">
 
-        <p class="mt-3 text-sm text-zinc-400 line-clamp-3">
-          {post.data.excerpt}
-        </p>
+          {post.data.tag && (
+            <span class="mb-2 inline-block text-xs uppercase tracking-wide font-semibold text-indigo-400">
+              {post.data.tag}
+            </span>
+          )}
 
-        <div class="mt-6 flex items-center gap-4 text-xs text-zinc-500">
-          <time>{post.data.date}</time>
-          <span>•</span>
-          <span>{post.data.readingTime} min</span>
+          <h2 class="text-2xl md:text-3xl font-semibold leading-tight">
+
+            <a
+              href={`/blog/${post.slug}`}
+              class="hover:underline underline-offset-4 decoration-zinc-500"
+            >
+              {post.data.title}
+            </a>
+          </h2>
+
+          <p class="mt-3 text-sm text-zinc-400 max-w-xl">
+            {post.data.excerpt}
+          </p>
+
+          <div class="mt-5 flex items-center gap-4 text-xs text-zinc-500">
+            <time>
+  {post.data.date.toLocaleDateString("cs-CZ")}
+</time>
+
+            <span>•</span>
+          
+<span>{post.readingTime} min</span>
+
+
+
+          </div>
+
         </div>
 
       </article>
@@ -199,5 +183,7 @@ const visiblePosts = activeTag
   </div>
 
 </section>
+
+
 
 </Layout>

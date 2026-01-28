@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { calculateReadingTime } from "../../utils/readingTime";
+
 
 // Vygeneruj statické stránky pro všechny články
 export async function getStaticPaths() {
@@ -16,41 +18,230 @@ const { post } = Astro.props;
 
 // Astro v5 render obsahu
 const { Content } = await post.render();
+const plainText = post.body;
+const readingTime = calculateReadingTime(plainText);
+
 const { data } = post;
+const allPosts = (await getCollection("blog"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => new Date(a.data.date) - new Date(b.data.date));
+
+const index = allPosts.findIndex((p) => p.slug === post.slug);
+
+const prevPost = index > 0 ? allPosts[index - 1] : null;
+const nextPost = index < allPosts.length - 1 ? allPosts[index + 1] : null;
+
 ---
 
 <BaseLayout>
 
-<article class="px-6 pt-56 pb-32 md:px-12 lg:px-24 max-w-3xl mx-auto">
+<!-- ================= ARTICLE TOP NAV ================= -->
 
-  <!-- META -->
-  <div class="mb-10">
-    <span class="text-xs uppercase tracking-wide text-indigo-400">
-      {data.tag}
-    </span>
+<nav class="fixed top-0 inset-x-0 z-40 backdrop-blur bg-slate-950/70 border-b border-white/5">
+  <div class="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between text-sm">
 
-    <time class="block mt-2 text-slate-500">
-      {data.date.toLocaleDateString("cs-CZ")}
-    </time>
+    <div class="flex items-center gap-6">
+      <a href="/" class="group inline-flex items-center gap-2 text-slate-400 hover:text-slate-200 transition">
+        <span class="transition-transform group-hover:-translate-x-1">←</span>
+        Hlavní stránka
+      </a>
+
+      <a href="/blog" class="text-slate-400 hover:text-slate-200 transition">
+        Přehled článků
+      </a>
+    </div>
+
+    {data.tag && (
+      <span class="rounded-full border border-indigo-400/30 bg-indigo-400/10 px-3 py-1 text-xs text-indigo-300">
+        {data.tag}
+      </span>
+    )}
+
+  </div>
+  <div id="reading-progress" class="absolute bottom-0 left-0 h-[2px] bg-indigo-500 transition-[width] duration-75"></div>
+
+</nav>
+
+<script is:inline>
+  const bar = document.getElementById("reading-progress");
+
+  window.addEventListener("scroll", () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = Math.min(100, (scrollTop / docHeight) * 100);
+
+    bar.style.width = progress + "%";
+  });
+</script>
+
+
+<article class="px-6 pt-36 pb-32 md:px-12 max-w-7xl mx-auto">
+
+  <div class="max-w-4xl">
+
+    <!-- TAG -->
+    {data.tag && (
+      <span class="inline-block mb-4 text-xs uppercase tracking-wide font-semibold text-indigo-400">
+        {data.tag}
+      </span>
+    )}
+
+    <!-- TITLE -->
+    <h1 class="text-4xl md:text-5xl font-bold text-slate-100 leading-tight">
+      {data.title}
+    </h1>
+
+    <!-- PEREX -->
+    {data.excerpt && (
+      <p class="mt-6 text-xl leading-relaxed text-slate-400">
+        {data.excerpt}
+      </p>
+    )}
+
+    <!-- DIVIDER -->
+    <div class="mt-8 h-px w-24 bg-white/10"></div>
+
+<!-- DATE -->
+<div class="mt-3 flex items-center gap-2 text-xs uppercase tracking-wide text-slate-500">
+  <time>
+    {data.date.toLocaleDateString("cs-CZ")}
+  </time>
+  <span class="text-slate-600">•</span>
+  <span>
+    {readingTime} min čtení
+  </span>
+</div>
+
+
+
   </div>
 
-  <!-- TITLE -->
-  <h1 class="text-4xl md:text-5xl font-bold text-slate-100 leading-tight">
-    {data.title}
-  </h1>
-
-  <!-- HERO IMAGE -->
-  <img
-    src={data.cover}
-    alt={data.title}
-    class="mt-12 rounded-2xl w-full object-cover rounded-2xl"
-  />
+  <!-- COVER -->
+  {data.cover && (
+    <img
+      src={data.cover}
+      alt={data.title}
+      class="mt-16 w-full aspect-[16/9] object-cover rounded-2xl shadow-xl shadow-black/40"
+    />
+  )}
 
   <!-- CONTENT -->
-  <div class="prose prose-invert prose-slate mt-16 max-w-none">
+  <div class="mt-20 max-w-4xl prose prose-invert prose-slate">
     <Content />
   </div>
 
 </article>
+
+<!-- ================= SOCIAL SHARE ================= -->
+
+<section class="mx-auto max-w-7xl px-6 pb-28 md:px-12">
+
+  <div class="max-w-4xl border-t border-white/10 pt-10 flex flex-wrap items-center gap-6">
+
+    <span class="text-sm uppercase tracking-wide text-slate-500">
+      Sdílet článek
+    </span>
+
+    <!-- Facebook -->
+    <a
+      href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(Astro.url.href)}`}
+      target="_blank"
+      rel="noopener"
+      aria-label="Sdílet na Facebooku"
+      class="text-slate-400 hover:text-indigo-400 transition"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path d="M7 10v4h3v7h4v-7h3l1-4h-4v-2c0-1 .333-2 2-2h2v-4h-3c-3.314 0-5 2.686-5 6v2h-3z" />
+      </svg>
+    </a>
+
+    <!-- X -->
+    <a
+      href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(Astro.url.href)}&text=${encodeURIComponent(data.title)}`}
+      target="_blank"
+      rel="noopener"
+      aria-label="Sdílet na X"
+      class="text-slate-400 hover:text-indigo-400 transition"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+        <path d="M4 20l6.768 -6.768" />
+        <path d="M20 4l-6.768 6.768" />
+      </svg>
+    </a>
+
+    <!-- LinkedIn -->
+    <a
+      href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.href)}`}
+      target="_blank"
+      rel="noopener"
+      aria-label="Sdílet na LinkedIn"
+      class="text-slate-400 hover:text-indigo-400 transition"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M8 11v5"></path>
+        <path d="M8 8v.01"></path>
+        <path d="M12 16v-5"></path>
+        <path d="M16 16v-3a2 2 0 1 0 -4 0"></path>
+        <path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4l0 -10"></path>
+      </svg>
+    </a>
+
+  </div>
+
+</section>
+
+
+
+<!-- ================= NEXT / PREVIOUS ================= -->
+
+<section class="mx-auto max-w-7xl px-6 pb-40 md:px-12">
+
+  <div class="grid gap-12 md:grid-cols-2">
+
+    {prevPost && (
+      <a
+        href={`/blog/${prevPost.slug}`}
+        class="group rounded-2xl border border-white/10 p-8 hover:border-indigo-500/40 transition"
+      >
+        <span class="block text-xs uppercase tracking-wide text-slate-500">
+          ← Předchozí článek
+        </span>
+
+        <h3 class="mt-3 text-xl font-semibold text-white group-hover:underline">
+          {prevPost.data.title}
+        </h3>
+
+        <p class="mt-2 text-sm text-slate-400 line-clamp-2">
+          {prevPost.data.excerpt}
+        </p>
+      </a>
+    )}
+
+    {nextPost && (
+      <a
+        href={`/blog/${nextPost.slug}`}
+        class="group rounded-2xl border border-white/10 p-8 text-right hover:border-indigo-500/40 transition"
+      >
+        <span class="block text-xs uppercase tracking-wide text-slate-500">
+          Další článek →
+        </span>
+
+        <h3 class="mt-3 text-xl font-semibold text-white group-hover:underline">
+          {nextPost.data.title}
+        </h3>
+
+        <p class="mt-2 text-sm text-slate-400 line-clamp-2">
+          {nextPost.data.excerpt}
+        </p>
+      </a>
+    )}
+
+  </div>
+
+</section>
+
+
 
 </BaseLayout>
