@@ -22,8 +22,8 @@ function getDate(prop) {
   return prop?.date?.start || null;
 }
 
-function getMultiSelect(prop) {
-  return prop?.multi_select?.map((t) => t.name) || [];
+function getSelect(prop) {
+  return prop?.select?.name || "";
 }
 
 function getFile(prop) {
@@ -92,9 +92,7 @@ async function main() {
     const slug = getText(props.Slug);
     const excerpt = getText(props.Excerpt);
     const date = getDate(props.Date);
-    const tagArr = getMultiSelect(props.Tag);
-const tag = tagArr.length ? tagArr[0] : "";
-
+    const tag = getSelect(props.Tag);
     const cover = getFile(props.Cover);
     const seoTitle = getText(props["SEO Title"]);
     const seoDescription = getText(props["SEO Description"]);
