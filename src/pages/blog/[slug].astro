@@ -17,9 +17,9 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 
 // Astro v5 render obsahu
-const { Content } = await post.render();
-const plainText = post.body;
-const readingTime = calculateReadingTime(plainText);
+const { Content, html } = await post.render();
+const readingTime = calculateReadingTime(html);
+
 
 const { data } = post;
 const allPosts = (await getCollection("blog"))
