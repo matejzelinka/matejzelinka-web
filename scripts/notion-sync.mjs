@@ -115,20 +115,21 @@ const tag = tags[0];
 
 
     const yaml =
-      "---\n" +
-      Object.entries(frontmatter)
-        .filter(([, v]) => v)
-        .map(([k, v]) => {
-  if (k === "date") {
-    return `${k}: ${v}`;
-  }
+  "---\n" +
+  Object.entries(frontmatter)
+    .map(([k, v]) => {
+      if (v === undefined || v === null) return null;
 
-  return `${k}: "${String(v).replace(/"/g, '\\"')}"`;
-})
+      if (k === "date") {
+        return `${k}: ${v}`;
+      }
 
+      return `${k}: "${String(v).replace(/"/g, '\\"')}"`;
+    })
+    .filter(Boolean)
+    .join("\n") +
+  "\n---\n\n";
 
-        .join("\n") +
-      "\n---\n\n";
 
     const filePath = path.join(OUTPUT_DIR, `${slug}.md`);
 
