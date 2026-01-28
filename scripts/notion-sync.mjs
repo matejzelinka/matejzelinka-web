@@ -92,7 +92,8 @@ async function main() {
     const slug = getText(props.Slug);
     const excerpt = getText(props.Excerpt);
     const date = getDate(props.Date);
-    const tag = getMultiSelect(props.Tag)[0] || "ostatni";
+    const tags = getMultiSelect(props.Tag);
+const tag = tags[0];
     const cover = getFile(props.Cover);
     const seoTitle = getText(props["SEO Title"]);
     const seoDescription = getText(props["SEO Description"]);
