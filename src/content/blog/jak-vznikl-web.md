@@ -1,0 +1,11 @@
+---
+title: "Jak vznikl web www.matejzelinka.cz?"
+excerpt: "Byla to poměrně dlouhá a strastiplná cesta. Nebýt dnešních AI možností, tak do toho asi nejdu. Ale s výsledkem jsem spokojený. Doufám, že i vy. A pokud se do něčeho podobného chcete pustit, "
+date: 2026-01-28
+tag: "Projekty"
+cover: "https://prod-files-secure.s3.us-west-2.amazonaws.com/bad4ce80-6d38-815e-b21d-0003cc2daa50/86d46020-7629-42c9-9238-4792d2843bb8/neporazitelni-04.02.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZLEIEQOL%2F20260128%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260128T145543Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEKb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIF02ebrlEZr3Ld4E1BUY0o4tl%2FJ2rpO9Q0v%2BRzBgy6O6AiBLKi80jx%2B3YkWuw%2F0r2WC9ILT8ZH%2Bix8ePKIVn5LUsDyr%2FAwhvEAAaDDYzNzQyMzE4MzgwNSIMhUZIV0lo57EOc06%2BKtwDhqUwgUTFZ5VhGaYEiY2Tdmr8oTnsNdVGcaTd49iAVLIw53HGo%2FPdgSfSFDSWI74XE0E8WvCbdV5lIoVU7CX1UiYdOVroBQxjzWYl4sUgHfPSE45Mv6exSm109fNjEyuLMmTJyUnl47MIFJmSD1r23ihrZZSAsL%2BxhpHk5rN6ArtjKjF3fIQ1kNdasfqwd%2FAwkZglXELBIr1ZzRMC3jVSdcYIXbSLZcErhhKAoACxo%2B%2FX0jc9Y483p5KOsKmTq7NZWsVj96Uv9NQcXSDxS9OT3pa%2FfQ2joBn84sArIuhedVxEIjRjV9XevHOoiXRCHKDZ0WZzpvKQH%2BApq1QqDLfnseLKNy7c2XKjQLOufq1rhMoVH54Huy1aIVMZvrjv6S1AWXAdsy6ALrm7G2s4WJ%2FdB7cVOL9RoWJCy1sU0an7kCfACuvp%2FeiiSEnFrwxRuGEB9RnLBc2LpeDmoVmRnNKQV2d%2Fq%2B8ghW3DUQ7VQgrGgplyWPI39BeZbZ6WY2S%2Bj4bkOO%2Fb2i2s3KmF71UvYAubVpp%2FDkVY3IndSJl73l33p2nsaYFiZSaVM%2Bdzhm4rg0Bk0I5j4ayp8f%2F4c8oUzLVI7VojqcjxLCekbIgTLlvKm68qz%2BAYiZpgNkZZ98sw3qboywY6pgGAA5k10qm1DpHgd3MhMbFyO1gsSWnaJ1WENoIdQAg2HHzpi0xxRqhObz%2BHIEDLC%2FZY6HEgbkXC2UkcUnYIYPg9YZTIE6%2B1n2J2b6UkzsCQabzqIJLsVdiCbOZyitkifAzpaq1uBGI6PR%2B9goJtwT6arvx2vTidDyxC7dD%2FkIwtMwA2Y%2FIi%2F6CWsMgVEuNxcbk0xUhhDdVKA7FQ%2F0Y8RufI5gK4qGxX&X-Amz-Signature=96aea5780cc139f363a2acafda21cba28dcc6308a6b7a1833d219bbc540f25ac&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+seoTitle: ""
+seoDescription: ""
+---
+
+# Jak vznikl web www.matejzelinka.cz?
