@@ -38,12 +38,17 @@ jobs:
       - name: Build site
         run: npm run build
 
-      - name: Deploy via SFTP (Endora)
-        uses: appleboy/scp-action@v0.1.7
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          host: ${{ secrets.FTP_HOST }}
+          server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
-          port: 222
-          source: "dist/*"
-          target: ${{ secrets.FTP_PATH }}
+
+          protocol: ftp
+          timeout: 60000
+          log-level: verbose
+
+          local-dir: dist/
+          server-dir: ${{ secrets.FTP_PATH }}/
+          dangerous-clean-slate: true
