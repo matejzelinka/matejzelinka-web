@@ -44,16 +44,20 @@ const featured = posts.slice(0, 7);
           <img src={post.data.cover} class="thumb" />
 
           <div class="body">
-            {post.data.tags?.[0] && (
-              <span
-                class={`inline-block rounded-full border px-2 py-1 text-[11px] font-semibold ${
-                  TAG_COLORS[post.data.tags[0].color] ??
-                  TAG_COLORS.gray
-                }`}
-              >
-                {post.data.tags[0].name}
-              </span>
-            )}
+            {post.data.tags && (
+  <div class="flex flex-wrap gap-2">
+    {post.data.tags.map((tag) => (
+      <span
+        class={`inline-flex w-fit rounded-full border px-2 py-1 text-[11px] font-semibold ${
+          TAG_COLORS[tag.color] ?? TAG_COLORS.gray
+        }`}
+      >
+        {tag.name}
+      </span>
+    ))}
+  </div>
+)}
+
 
             <h3>{post.data.title}</h3>
             <p>{post.data.excerpt}</p>
