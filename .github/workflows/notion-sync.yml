@@ -38,15 +38,14 @@ jobs:
       - name: Build site
         run: npm run build
 
-      - name: Deploy via SFTP (Endora)
+      - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
 
-          protocol: sftp
-          port: 222
+          protocol: ftp
 
           timeout: 60000
           log-level: verbose
@@ -54,4 +53,3 @@ jobs:
           local-dir: dist/
           server-dir: ${{ secrets.FTP_PATH }}/
           dangerous-clean-slate: true
-
