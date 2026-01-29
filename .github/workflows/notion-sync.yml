@@ -39,12 +39,11 @@ jobs:
         run: npm run build
 
       - name: Deploy via SFTP (Endora)
-        uses: easingthemes/ssh-deploy@v4.1.10
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.FTP_HOST }}
-          REMOTE_USER: ${{ secrets.FTP_USER }}
-          REMOTE_PORT: 222
-          TARGET: ${{ secrets.FTP_PATH }}
-          SOURCE: dist/
-
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 222
+          source: "dist/*"
+          target: ${{ secrets.FTP_PATH }}
