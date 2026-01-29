@@ -1,11 +1,20 @@
 ---
 import { getCollection } from "astro:content";
 
+const TAG_COLORS = {
+  blue: "bg-blue-500/10 text-blue-300 border-blue-400/30",
+  purple: "bg-purple-500/10 text-purple-300 border-purple-400/30",
+  green: "bg-emerald-500/10 text-emerald-300 border-emerald-400/30",
+  red: "bg-red-500/10 text-red-300 border-red-400/30",
+  yellow: "bg-yellow-500/10 text-yellow-300 border-yellow-400/30",
+  orange: "bg-orange-500/10 text-orange-300 border-orange-400/30",
+  pink: "bg-pink-500/10 text-pink-300 border-pink-400/30",
+  gray: "bg-slate-500/10 text-slate-300 border-slate-400/30",
+};
+
 const posts = await getCollection("blog");
 
-posts.sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
-);
+posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 const featured = posts.slice(0, 7);
 ---
@@ -14,12 +23,9 @@ const featured = posts.slice(0, 7);
   id="blog"
   class="relative px-6 py-32 md:px-12 lg:px-24 max-w-7xl mx-auto overflow-hidden"
 >
-
-  <!-- HEADER -->
   <div class="mb-20 max-w-2xl">
     <h2
       class="pb-1 leading-[1.3] text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-200 to-slate-400 bg-clip-text text-transparent"
-
     >
       Texty & blog
     </h2>
@@ -28,24 +34,27 @@ const featured = posts.slice(0, 7);
     </p>
   </div>
 
-  <!-- MASK WRAPPER -->
   <div id="blog-mask" class="relative">
-
-    <!-- TRACK -->
     <div
       id="blog-track"
       class="flex gap-10 transition-transform duration-700 ease-out will-change-transform"
     >
-
       {featured.map((post) => (
-        <a
-          href={`/blog/${post.slug}`}
-          class="blog-card block"
-        >
+        <a href={`/blog/${post.slug}`} class="blog-card block">
           <img src={post.data.cover} class="thumb" />
 
           <div class="body">
-            <span>{post.data.tags}</span>
+            {post.data.tags?.[0] && (
+              <span
+                class={`inline-block rounded-full border px-2 py-1 text-[11px] font-semibold ${
+                  TAG_COLORS[post.data.tags[0].color] ??
+                  TAG_COLORS.gray
+                }`}
+              >
+                {post.data.tags[0].name}
+              </span>
+            )}
+
             <h3>{post.data.title}</h3>
             <p>{post.data.excerpt}</p>
             <span>Číst článek →</span>
@@ -53,65 +62,12 @@ const featured = posts.slice(0, 7);
         </a>
       ))}
 
-      <!-- MORE -->
       <a href="/blog" class="blog-more block">
         <div>
           <p>Více článků najdete v blogu</p>
           <span>Přejít na blog →</span>
         </div>
       </a>
-
     </div>
   </div>
-
-  <!-- NAV -->
-  <div class="mt-16 flex justify-center gap-20">
-
-    <button id="blog-prev" class="nav-btn">
-      <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M17 6L9 14l8 8" />
-      </svg>
-    </button>
-
-    <button id="blog-next" class="nav-btn">
-      <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M11 6l8 8-8 8" />
-      </svg>
-    </button>
-
-  </div>
-
-  <!-- JS -->
-  <script>
-    const mask = document.getElementById("blog-mask");
-    const track = document.getElementById("blog-track");
-    const next = document.getElementById("blog-next");
-    const prev = document.getElementById("blog-prev");
-
-    let index = 0;
-    const cardWidth = 360;
-    const maxIndex = track.children.length - 1;
-
-    function updateMask() {
-      mask.classList.remove("fade-left", "fade-right", "fade-both");
-
-      if (index === 0) mask.classList.add("fade-right");
-      else if (index >= maxIndex - 2) mask.classList.add("fade-left");
-      else mask.classList.add("fade-both");
-    }
-
-    next.addEventListener("click", () => {
-      index = Math.min(maxIndex - 2, index + 1);
-      track.style.transform = `translateX(-${index * cardWidth}px)`;
-      updateMask();
-    });
-
-    prev.addEventListener("click", () => {
-      index = Math.max(0, index - 1);
-      track.style.transform = `translateX(-${index * cardWidth}px)`;
-      updateMask();
-    });
-
-    updateMask();
-  </script>
 </section>

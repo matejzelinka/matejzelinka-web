@@ -51,11 +51,6 @@ const nextPost = index < allPosts.length - 1 ? allPosts[index + 1] : null;
       </a>
     </div>
 
-    {data.tags?.map((tag) => (
-  <span class="rounded-full border border-indigo-400/30 bg-indigo-400/10 px-3 py-1 text-xs text-indigo-300">
-    {tag}
-  </span>
-))}
 
 
   </div>
@@ -81,11 +76,29 @@ const nextPost = index < allPosts.length - 1 ? allPosts[index + 1] : null;
   <div class="max-w-4xl">
 
     <!-- TAG -->
-    {data.tags?.map((tag) => (
-  <span class="inline-block mr-3 mb-4 text-xs uppercase tracking-wide font-semibold text-indigo-400">
-    {tag}
-  </span>
-))}
+   {data.tags?.map((tag) => {
+  const TAG_COLORS = {
+    blue: "bg-blue-500/10 text-blue-300 border-blue-400/30",
+    purple: "bg-purple-500/10 text-purple-300 border-purple-400/30",
+    green: "bg-emerald-500/10 text-emerald-300 border-emerald-400/30",
+    red: "bg-red-500/10 text-red-300 border-red-400/30",
+    yellow: "bg-yellow-500/10 text-yellow-300 border-yellow-400/30",
+    orange: "bg-orange-500/10 text-orange-300 border-orange-400/30",
+    pink: "bg-pink-500/10 text-pink-300 border-pink-400/30",
+    gray: "bg-slate-500/10 text-slate-300 border-slate-400/30",
+  };
+
+  return (
+    <span
+      class={`inline-block mr-3 mb-4 rounded-full border px-3 py-1 text-xs uppercase tracking-wide font-semibold ${
+        TAG_COLORS[tag.color] ?? TAG_COLORS.gray
+      }`}
+    >
+      {tag.name}
+    </span>
+  );
+})}
+
 
    
 

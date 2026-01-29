@@ -26,8 +26,13 @@ function getDate(prop) {
 
 function getMultiSelect(prop) {
   if (!prop?.multi_select) return [];
-  return prop.multi_select.map((t) => t.name);
+
+  return prop.multi_select.map((t) => ({
+    name: t.name,
+    color: t.color,
+  }));
 }
+
 
 function getFile(prop) {
   const file = prop?.files?.[0];
