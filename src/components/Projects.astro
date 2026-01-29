@@ -143,41 +143,103 @@
 
   </div>
 
-  <!-- MASK LOGIC -->
-  <script>
-    const mask = document.getElementById("projects-mask");
-    const track = document.getElementById("projects-track");
-    const next = document.getElementById("projects-next");
-    const prev = document.getElementById("projects-prev");
+  
+</section>
 
-    let index = 0;
-    const cardWidth = 432;
+<script>
+  const mask = document.getElementById("projects-mask");
+  const track = document.getElementById("projects-track");
+  const next = document.getElementById("projects-next");
+  const prev = document.getElementById("projects-prev");
+
+  let index = 0;
+  let startX = 0;
+  let isDragging = false;
+
+  function getCardWidth() {
+    const card = track.children[0];
+    const gap = parseFloat(getComputedStyle(track).gap || 0);
+    return card.offsetWidth + gap;
+  }
+
+  function updateMask() {
+    mask.classList.remove("fade-left", "fade-right", "fade-both");
+
     const maxIndex = track.children.length - 1;
 
-    function updateMask() {
-      mask.classList.remove("fade-left", "fade-right", "fade-both");
+    if (index === 0) {
+      mask.classList.add("fade-right");
+    } else if (index >= maxIndex - 1) {
+      mask.classList.add("fade-left");
+    } else {
+      mask.classList.add("fade-both");
+    }
+  }
 
-      if (index === 0) {
-        mask.classList.add("fade-right");
-      } else if (index >= maxIndex - 1) {
-        mask.classList.add("fade-left");
-      } else {
-        mask.classList.add("fade-both");
+  function goNext() {
+    const cardWidth = getCardWidth();
+    index = Math.min(track.children.length - 2, index + 1);
+    track.style.transform = `translateX(-${index * cardWidth}px)`;
+    updateMask();
+  }
+
+  function goPrev() {
+    const cardWidth = getCardWidth();
+    index = Math.max(0, index - 1);
+    track.style.transform = `translateX(-${index * cardWidth}px)`;
+    updateMask();
+  }
+
+  next.addEventListener("click", goNext);
+  prev.addEventListener("click", goPrev);
+
+  // 👉 SWIPE
+  track.addEventListener(
+    "touchstart",
+    (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+    },
+    { passive: true }
+  );
+
+  track.addEventListener(
+    "touchend",
+    (e) => {
+      if (!isDragging) return;
+
+      const diff = startX - e.changedTouches[0].clientX;
+
+      if (Math.abs(diff) > 60) {
+        diff > 0 ? goNext() : goPrev();
       }
+
+      isDragging = false;
+    },
+    { passive: true }
+  );
+
+  track.addEventListener("mousedown", (e) => {
+    startX = e.clientX;
+    isDragging = true;
+  });
+
+  track.addEventListener("mouseup", (e) => {
+    if (!isDragging) return;
+
+    const diff = startX - e.clientX;
+
+    if (Math.abs(diff) > 80) {
+      diff > 0 ? goNext() : goPrev();
     }
 
-    next.addEventListener("click", () => {
-      index = Math.min(maxIndex - 1, index + 1);
-      track.style.transform = `translateX(-${index * cardWidth}px)`;
-      updateMask();
-    });
+    isDragging = false;
+  });
 
-    prev.addEventListener("click", () => {
-      index = Math.max(0, index - 1);
-      track.style.transform = `translateX(-${index * cardWidth}px)`;
-      updateMask();
-    });
+  track.addEventListener("mouseleave", () => {
+    isDragging = false;
+  });
 
-    updateMask();
-  </script>
-</section>
+  updateMask();
+</script>
+
