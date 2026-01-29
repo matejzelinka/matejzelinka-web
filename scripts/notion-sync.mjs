@@ -38,18 +38,24 @@ function getFile(prop) {
 
 /* ================= CONTENT ================= */
 
-// stáhne bloky (obsah článku)
-async function fetchPageContent(pageId) {
+// 👉 REKURZIVNÍ TAŽENÍ BLOKŮ
+async function fetchBlockTree(blockId) {
   const blocks = [];
   let cursor;
 
   while (true) {
     const res = await notion.blocks.children.list({
-      block_id: pageId,
+      block_id: blockId,
       start_cursor: cursor,
     });
 
-    blocks.push(...res.results);
+    for (const block of res.results) {
+      if (block.has_children) {
+        block.children = await fetchBlockTree(block.id);
+      }
+
+      blocks.push(block);
+    }
 
     if (!res.has_more) break;
     cursor = res.next_cursor;
@@ -58,37 +64,73 @@ async function fetchPageContent(pageId) {
   return blocks;
 }
 
-// základní převod Notion bloků → Markdown
-function blocksToMarkdown(blocks) {
+// 👉 BLOKY → MARKDOWN (rekurzivně)
+function blocksToMarkdown(blocks, depth = 0) {
   return blocks
     .map((block) => {
-      if (block.type === "paragraph") {
-        return block.paragraph.rich_text
-          .map((t) => t.plain_text)
-          .join("");
+      let md = "";
+
+      switch (block.type) {
+        case "paragraph":
+          md = block.paragraph.rich_text
+            .map((t) => t.plain_text)
+            .join("");
+          break;
+
+        case "heading_1":
+          md =
+            "# " +
+            block.heading_1.rich_text.map((t) => t.plain_text).join("");
+          break;
+
+        case "heading_2":
+          md =
+            "## " +
+            block.heading_2.rich_text.map((t) => t.plain_text).join("");
+          break;
+
+        case "heading_3":
+          md =
+            "### " +
+            block.heading_3.rich_text.map((t) => t.plain_text).join("");
+          break;
+
+        case "bulleted_list_item":
+          md =
+            "  ".repeat(depth) +
+            "- " +
+            block.bulleted_list_item.rich_text
+              .map((t) => t.plain_text)
+              .join("");
+          break;
+
+        case "numbered_list_item":
+          md =
+            "  ".repeat(depth) +
+            "1. " +
+            block.numbered_list_item.rich_text
+              .map((t) => t.plain_text)
+              .join("");
+          break;
+
+        case "quote":
+          md =
+            "> " +
+            block.quote.rich_text.map((t) => t.plain_text).join("");
+          break;
+
+        case "callout":
+          md =
+            "> 💡 " +
+            block.callout.rich_text.map((t) => t.plain_text).join("");
+          break;
       }
 
-      if (block.type === "heading_1") {
-        return "# " + block.heading_1.rich_text.map(t => t.plain_text).join("");
+      if (block.children?.length) {
+        md += "\n\n" + blocksToMarkdown(block.children, depth + 1);
       }
 
-      if (block.type === "heading_2") {
-        return "## " + block.heading_2.rich_text.map(t => t.plain_text).join("");
-      }
-
-      if (block.type === "heading_3") {
-        return "### " + block.heading_3.rich_text.map(t => t.plain_text).join("");
-      }
-
-      if (block.type === "bulleted_list_item") {
-        return "- " + block.bulleted_list_item.rich_text.map(t => t.plain_text).join("");
-      }
-
-      if (block.type === "numbered_list_item") {
-        return "1. " + block.numbered_list_item.rich_text.map(t => t.plain_text).join("");
-      }
-
-      return "";
+      return md;
     })
     .filter(Boolean)
     .join("\n\n");
@@ -162,8 +204,8 @@ async function main() {
       continue;
     }
 
-    // 👉 TADY SE TAHA OBSAH
-    const blocks = await fetchPageContent(page.id);
+    // 👉 OPRAVA – tahá strom bloků
+    const blocks = await fetchBlockTree(page.id);
     const content = blocksToMarkdown(blocks);
 
     const frontmatter = {
@@ -189,7 +231,6 @@ async function main() {
 
     const filePath = path.join(OUTPUT_DIR, `${slug}.md`);
 
-    // 👉 TADY SE ZAPISUJE CONTENT
     await fs.writeFile(filePath, yaml + content);
 
     console.log("✓ synced:", slug);

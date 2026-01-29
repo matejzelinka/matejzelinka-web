@@ -32,6 +32,12 @@
         "cover": {
           "type": "string"
         },
+        "seoTitle": {
+          "type": "string"
+        },
+        "seoDescription": {
+          "type": "string"
+        },
         "$schema": {
           "type": "string"
         }
@@ -39,7 +45,6 @@
       "required": [
         "title",
         "date",
-        "tag",
         "excerpt",
         "cover"
       ],
