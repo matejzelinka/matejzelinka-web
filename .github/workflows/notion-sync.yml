@@ -38,7 +38,7 @@ jobs:
       - name: Build site
         run: npm run build
 
-            - name: Deploy via SFTP (Endora)
+      - name: Deploy via SFTP (Endora)
         uses: easingthemes/ssh-deploy@v4.1.10
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
