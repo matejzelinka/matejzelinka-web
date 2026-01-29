@@ -7,10 +7,14 @@ const blog = defineCollection({
     date: z.date(),
     
 
-tags: z.array(z.object({
-      name: z.string(),
-      color: z.string(),
-    }).optional(),
+tags: z
+        .array(
+          z.object({
+            name: z.string(),
+            color: z.string(),
+          })
+        )
+        .optional(),
 
 
     excerpt: z.string(),
