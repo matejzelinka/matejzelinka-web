@@ -221,9 +221,26 @@ async function main() {
         .map(([k, v]) => {
           if (k === "date") return `${k}: ${v}`;
 
-          if (Array.isArray(v)) {
-            return `${k}: [${v.map((x) => `"${x}"`).join(", ")}]`;
-          }
+if (Array.isArray(v)) {
+  // pole objektů (např. tags)
+  if (typeof v[0] === "object") {
+    return (
+      `${k}:\n` +
+      v
+        .map(
+          (item) =>
+            `  - name: "${item.name.replace(/"/g, '\\"')}"\n` +
+            `    color: "${item.color}"`
+        )
+        .join("\n")
+    );
+  }
+
+  // pole stringů
+  return `${k}: [${v.map((x) => `"${x}"`).join(", ")}]`;
+}
+
+
 
           return `${k}: "${String(v).replace(/"/g, '\\"')}"`;
         })
