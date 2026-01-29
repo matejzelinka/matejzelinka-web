@@ -24,8 +24,9 @@ function getDate(prop) {
   return prop?.date?.start || null;
 }
 
-function getSelect(prop) {
-  return prop?.select?.name || "";
+function getMultiSelect(prop) {
+  if (!prop?.multi_select) return [];
+  return prop.multi_select.map((t) => t.name);
 }
 
 function getFile(prop) {
@@ -38,7 +39,6 @@ function getFile(prop) {
 
 /* ================= CONTENT ================= */
 
-// 👉 REKURZIVNÍ TAŽENÍ BLOKŮ
 async function fetchBlockTree(blockId) {
   const blocks = [];
   let cursor;
@@ -64,7 +64,6 @@ async function fetchBlockTree(blockId) {
   return blocks;
 }
 
-// 👉 BLOKY → MARKDOWN (rekurzivně)
 function blocksToMarkdown(blocks, depth = 0) {
   return blocks
     .map((block) => {
@@ -139,8 +138,6 @@ function blocksToMarkdown(blocks, depth = 0) {
 /* ================= DATA SOURCE ================= */
 
 async function fetchAllPages() {
-  console.log("→ resolving data source…");
-
   const db = await notion.databases.retrieve({
     database_id: DATABASE_ID,
   });
@@ -150,8 +147,6 @@ async function fetchAllPages() {
   if (!dataSourceId) {
     throw new Error("Database has no data_sources");
   }
-
-  console.log("→ data source:", dataSourceId);
 
   let results = [];
 
@@ -194,17 +189,13 @@ async function main() {
     const slug = getText(props.Slug);
     const excerpt = getText(props.Excerpt);
     const date = getDate(props.Date);
-    const tag = getSelect(props.Tag);
+    const tags = getMultiSelect(props.Tag);
     const cover = getFile(props.Cover);
     const seoTitle = getText(props["SEO Title"]);
     const seoDescription = getText(props["SEO Description"]);
 
-    if (!slug) {
-      console.warn(`⚠️ Skipping "${title}" – missing slug`);
-      continue;
-    }
+    if (!slug) continue;
 
-    // 👉 OPRAVA – tahá strom bloků
     const blocks = await fetchBlockTree(page.id);
     const content = blocksToMarkdown(blocks);
 
@@ -212,7 +203,7 @@ async function main() {
       title,
       excerpt,
       date,
-      tag,
+      tags,
       cover,
       seoTitle,
       seoDescription,
@@ -221,9 +212,14 @@ async function main() {
     const yaml =
       "---\n" +
       Object.entries(frontmatter)
-        .filter(([, v]) => v !== undefined && v !== null && v !== "")
+        .filter(([, v]) => v !== undefined && v !== null)
         .map(([k, v]) => {
           if (k === "date") return `${k}: ${v}`;
+
+          if (Array.isArray(v)) {
+            return `${k}: [${v.map((x) => `"${x}"`).join(", ")}]`;
+          }
+
           return `${k}: "${String(v).replace(/"/g, '\\"')}"`;
         })
         .join("\n") +

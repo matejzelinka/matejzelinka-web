@@ -51,11 +51,12 @@ const nextPost = index < allPosts.length - 1 ? allPosts[index + 1] : null;
       </a>
     </div>
 
-    {data.tag && (
-      <span class="rounded-full border border-indigo-400/30 bg-indigo-400/10 px-3 py-1 text-xs text-indigo-300">
-        {data.tag}
-      </span>
-    )}
+    {data.tags?.map((tag) => (
+  <span class="rounded-full border border-indigo-400/30 bg-indigo-400/10 px-3 py-1 text-xs text-indigo-300">
+    {tag}
+  </span>
+))}
+
 
   </div>
   <div id="reading-progress" class="absolute bottom-0 left-0 h-[2px] bg-indigo-500 transition-[width] duration-75"></div>
@@ -80,11 +81,13 @@ const nextPost = index < allPosts.length - 1 ? allPosts[index + 1] : null;
   <div class="max-w-4xl">
 
     <!-- TAG -->
-    {data.tag && (
-      <span class="inline-block mb-4 text-xs uppercase tracking-wide font-semibold text-indigo-400">
-        {data.tag}
-      </span>
-    )}
+    {data.tags?.map((tag) => (
+  <span class="inline-block mr-3 mb-4 text-xs uppercase tracking-wide font-semibold text-indigo-400">
+    {tag}
+  </span>
+))}
+
+   
 
     <!-- TITLE -->
     <h1 class="text-4xl md:text-5xl font-bold text-slate-100 leading-tight">
