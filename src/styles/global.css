@@ -314,3 +314,16 @@
 #projects-track:active {
   cursor: grabbing;
 }
+.carousel-track {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel-track > * {
+  scroll-snap-align: start;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
