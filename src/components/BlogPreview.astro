@@ -13,7 +13,9 @@ const TAG_COLORS = {
 };
 
 const posts = await getCollection("blog");
+
 posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
 const featured = posts.slice(0, 7);
 ---
 
@@ -22,7 +24,9 @@ const featured = posts.slice(0, 7);
   class="relative px-6 py-32 md:px-12 lg:px-24 max-w-7xl mx-auto overflow-hidden"
 >
   <div class="mb-20 max-w-2xl">
-    <h2 class="pb-1 leading-[1.3] text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-200 to-slate-400 bg-clip-text text-transparent">
+    <h2
+      class="pb-1 leading-[1.3] text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-200 to-slate-400 bg-clip-text text-transparent"
+    >
       Texty & blog
     </h2>
     <p class="mt-4 text-slate-400">
@@ -31,32 +35,40 @@ const featured = posts.slice(0, 7);
   </div>
 
   <div id="blog-mask" class="relative">
-        <div
-  id="blog-track"
-  class="carousel-track flex gap-10"
->
+    <div
+      id="blog-track"
+      class="flex gap-10 transition-transform duration-700 ease-out will-change-transform"
+    >
       {featured.map((post) => (
         <a href={`/blog/${post.slug}`} class="blog-card block">
           <img src={post.data.cover} class="thumb" />
 
           <div class="body">
             {post.data.tags && (
-              <div class="flex flex-wrap">
-                {post.data.tags.map((tag) => (
-                  <span
-                    class={`inline-block mr-3 mb-4 rounded-full border px-3 py-1 text-xs uppercase tracking-wide font-semibold ${
-                      TAG_COLORS[tag.color] ?? TAG_COLORS.gray
-                    }`}
-                  >
-                    {tag.name}
-                  </span>
-                ))}
-              </div>
-            )}
+  <div class="flex flex-wrap gap-2">
+    {post.data.tags.map((tag) => (
+   
+
+<span
+  class={`inline-block mr-3 mb-4 rounded-full border px-3 py-1 text-xs uppercase tracking-wide font-semibold ${
+    TAG_COLORS[tag.color] ?? TAG_COLORS.gray
+  }`}
+>
+
+
+        {tag.name}
+      </span>
+
+
+    ))}
+  </div>
+)}
+
 
             <h3>{post.data.title}</h3>
             <p>{post.data.excerpt}</p>
             <span class="blog-cta">Číst článek →</span>
+
           </div>
         </a>
       ))}
@@ -64,20 +76,35 @@ const featured = posts.slice(0, 7);
       <a href="/blog" class="blog-more block">
         <div>
           <p>Více článků najdete v blogu</p>
-          <span class="blog-cta">Přejít na blog →</span>
+          <span>Přejít na blog →</span>
         </div>
       </a>
     </div>
   </div>
 
+<!-- NAV -->
   <div class="mt-16 flex justify-center gap-20">
-    <button id="blog-prev" class="text-slate-400 hover:text-indigo-400 transition">
-      ‹
+
+    <button
+      id="blog-prev"
+      class="text-slate-400 hover:text-indigo-400 transition drop-shadow-[0_0_12px_rgba(99,102,241,0.35)]"
+    >
+      <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M17 6L9 14l8 8" />
+      </svg>
     </button>
-    <button id="blog-next" class="text-slate-400 hover:text-indigo-400 transition">
-      ›
+
+    <button
+      id="blog-next"
+      class="text-slate-400 hover:text-indigo-400 transition drop-shadow-[0_0_12px_rgba(99,102,241,0.35)]"
+    >
+      <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M11 6l8 8-8 8" />
+      </svg>
     </button>
+
   </div>
+
 </section>
 
 <script>
@@ -86,17 +113,92 @@ const featured = posts.slice(0, 7);
   const next = document.getElementById("blog-next");
   const prev = document.getElementById("blog-prev");
 
-  next.addEventListener("click", () => {
-    track.scrollBy({
-      left: mask.offsetWidth,
-      behavior: "smooth",
-    });
-  });
+  let index = 0;
+  let startX = 0;
+  let isDragging = false;
 
-  prev.addEventListener("click", () => {
-    track.scrollBy({
-      left: -mask.offsetWidth,
-      behavior: "smooth",
-    });
-  });
+  function getCardWidth() {
+    const card = track.children[0];
+    const gap = parseFloat(getComputedStyle(track).gap || 0);
+    return card.offsetWidth + gap;
+  }
+
+  function updateMask() {
+    mask.classList.remove("fade-left", "fade-right", "fade-both");
+
+    const maxIndex = track.children.length - 1;
+
+    if (index === 0) {
+      mask.classList.add("fade-right");
+    } else if (index >= maxIndex - 1) {
+      mask.classList.add("fade-left");
+    } else {
+      mask.classList.add("fade-both");
+    }
+  }
+
+  function goNext() {
+    const cardWidth = getCardWidth();
+    index = Math.min(track.children.length - 2, index + 1);
+    track.style.transform = `translateX(-${index * cardWidth}px)`;
+    updateMask();
+  }
+
+  function goPrev() {
+    const cardWidth = getCardWidth();
+    index = Math.max(0, index - 1);
+    track.style.transform = `translateX(-${index * cardWidth}px)`;
+    updateMask();
+  }
+
+  next.addEventListener("click", goNext);
+  prev.addEventListener("click", goPrev);
+
+  mask.addEventListener(
+  "touchstart",
+  (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+  },
+  { passive: true }
+);
+
+mask.addEventListener(
+  "touchend",
+  (e) => {
+    if (!isDragging) return;
+
+    const diff = startX - e.changedTouches[0].clientX;
+
+    if (Math.abs(diff) > 60) {
+      diff > 0 ? goNext() : goPrev();
+    }
+
+    isDragging = false;
+  },
+  { passive: true }
+);
+
+mask.addEventListener("mousedown", (e) => {
+  startX = e.clientX;
+  isDragging = true;
+});
+
+mask.addEventListener("mouseup", (e) => {
+  if (!isDragging) return;
+
+  const diff = startX - e.clientX;
+
+  if (Math.abs(diff) > 80) {
+    diff > 0 ? goNext() : goPrev();
+  }
+
+  isDragging = false;
+});
+
+mask.addEventListener("mouseleave", () => {
+  isDragging = false;
+});
+
+  updateMask();
 </script>
