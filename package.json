@@ -7,7 +7,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "notion:sync": "node --use-system-ca scripts/notion-sync.mjs"
+    
+    "notion:sync": "node scripts/notion-sync.mjs"
+
   },
   "keywords": [],
   "author": "",
