@@ -5,73 +5,43 @@ date: 2026-02-02
 tags:
   - name: "Produktivita"
     color: "orange"
-cover: "https://prod-files-secure.s3.us-west-2.amazonaws.com/bad4ce80-6d38-815e-b21d-0003cc2daa50/4c64a5fa-f161-418f-807d-653500d84cfd/gmail.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466YEFL43OI%2F20260202%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260202T073402Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEBcaCXVzLXdlc3QtMiJIMEYCIQD1%2Ftfu4VZEhChwNQoaFHOAmd08BnF2xMysYIbUhJybqQIhAN3xbeBC81xLYhUo80zLKnFlltlfHRia4G6l8qlwOcK0KogECOD%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igx9zwYzoPwzRoM4awAq3APYL69W8b%2FY0JMWMKBAQ9fbKo4Ixf%2BCGADdPd94kIJ3Qh4jz8UEcPtD1GgWl%2B5vihKOs9drS343TQLANARnoK4NCrilPX95LE4dKR0MU24TyxKn6rzCxJUYlZwytqWCGaat9SVkdFuGKcroN%2F4KL9GtYYY6eMqSSxJ5NtLZX5vU%2FoDemS412p3EJpTDVWUrlpf8Ba27oVesbNef3ZuOoygY9xi3%2BsiATAg2J%2FS2otBpQch7bT%2Bs%2BfkX1FXqUsG4gHeu2app9fqw4AaBdntig9hPhrLcZPk4zFb7%2BXZK8FhQA964sXaAzXcc3ZygrPzQdGcSjPYP9tTNwcbdmSQ3w9s8VJdSSxHjCdWkNzqEr6As%2BFNYUCZIfEKqJ6r%2Fso0gC%2FQfkfd69jP%2F0d3c04Mb6NaxHW%2FyeqnYz603FAMXDCMfHhqDwv2btk0748Bt4f5a6flUKHM1l9P4%2Bc2wClv6q7Yx48Izy%2FqjAKd%2BxRGdhjosfzKA6ixWup4SRQX49SMahNh9vgyByk%2BHtjDsgTbF1lp60Ovlu2ej2ZyitxYayjuFids9wJeDdxyEuJBV62ttz0LL2IBF%2BPQ7UXwx4XS9F2Fd%2B0O%2Fjo4iaf636Tk6kvlXjLivunzoAP082VRnnDDynIHMBjqkAblns3WqCHwhFGYDmnIRy8eeVbfOoXQA4tZecQ8tlGfR3rUg5EdtDXtcqIiFsqAD%2BH56nPJigkZAs6IE9jahJ96ezjHw0%2FiQEbHndQTLVA%2FRT1bDUvu7oNkJsqoAhUx0eDotLkH0WjJZgd%2BqVJOLa2%2BKai%2BIuwQsB%2Bo8eDYCStqDH9veEy1PfJ%2BFKcdzykWGwcK%2B9i%2F0LTnisirUJONIUp%2FewaxW&X-Amz-Signature=43f6c7e7b5f6686ae37824564864a37f9acff6b49cc9f4ed69fe2ba2a5e3d96e&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+cover: "https://prod-files-secure.s3.us-west-2.amazonaws.com/bad4ce80-6d38-815e-b21d-0003cc2daa50/4c64a5fa-f161-418f-807d-653500d84cfd/gmail.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466SRVC5S6O%2F20260202%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260202T082309Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEBcaCXVzLXdlc3QtMiJGMEQCIE0cbzOssZLEAKVPy5VL9QTPbF5vM4SMzzwfod%2BS0BDjAiBt5wPCPMYseLp2D7Z3Z5%2FrYFIZQUyEkqMlmOWO054kJyqIBAjg%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMe0PL7cOMDJhyp5SzKtwD9f%2FmhOx4zltPn0eo9VFQRfkS%2FPc0kMrc7ZioOSpkF%2FjTquOgknTAsEiVjwlmCCINu2EkK5wALEwMhaURrkbl9FKhy9uTMLOFcitHxiYTVpFeu3qZOiT47cdjaFu4vm0tgwuiYHnDiM2ZGqlSahxuqaQsYPDcvnnIo7U2GWSDpTylhQjwgL8mVIgJxGYPnRadYaSsP%2BrCkCm02qSxWOUi8TUpf13fYE%2BHc8iGky5YBqxQCkolLK68SfyqgC0yMf6UQgUoTgclPU6Ytjmf0LuriEinbiQYwrtHA%2FQQYtHZJwueudmw3O%2F8RsSrMkLwL8vW0imkNLmWfwmA4Ji79srOcFurCf8bA2Jlmf%2FutyMm6%2BfSsbbsUr0S%2F7b7spAEts7W4kIVfS1Jfp5E%2FnTI5T6572%2BxnZyKO1ObZ5zRYQUUnPjAJdBSQCt8FE9L4c6hws9v7AqP8Q2dw2hAa030xH%2F99e0BWJzEWWNoHMeVeNUfpkqgFYAwTeKUw8V1sZcG6WiSUz75IjxCpP33oRRd%2BCWajx07tuVXB%2FcSQw4WxLvlMCwgEPhMeZvYil%2Fcv%2BkFOoLBKXr3em0WLyf%2Ff8%2Bvz6xTwqt9fWjpJBkQiRr%2FtAFVeA%2FKbfchcjLRXTzt%2BiIw85yBzAY6pgFCjD3POSpFjI0fVGXtnWYGZtZm2iSDXPf0blkH7GAwW%2F4qX1tKWAuX2uGqP9WEDgWNDNKJqQhFEu9RfTR0tRSjHqnQjbuiI4PHZyYLP%2Fo5G60zRnxpjVcJihg0MX2vD2uUsrcBoyUm%2Ftizks9UsAQzs39bKBUXvsf%2FcCWTPwH9il1qC1%2BLL%2F1altg3th5VAhjCqmQrPYXO4mW1ZYhS4CVOmwEbzMWC&X-Amz-Signature=8905f572132a6907fb20999cb21ee123893cedce51cca37e127488df15f7bcfa&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"
 seoTitle: "Jak z Gmailu udělat produktivní centrum"
 seoDescription: "gmail, e-mail, mail, inbox zero, google"
 ---
 
-## Odložit e-mail (Snooze)
+## Odložit e-mail
 
-Hned na úvod za mě jedna z nejsilnějších funkcí vůbec. E-mail zmizí z inboxu a vrátí se přesně v čas, kdy ho chcete řešit:
+Hned na úvod za mě jedna z nejsilnějších funkcí vůbec. E-mail odložím, zmizí z inboxu a vrátí se přesně v čas, kdy ho chci řešit. Zítra ráno, příští týden nebo 15. června v 8:15.
 
-- zítra ráno
+Použití v praxi: faktury si nechám poslat na den splatnosti, večerní e-mail, který se mi zrovna nechce řešit si pošlu ráno a nebo newslettery si nechám na večerní čas v posteli.
 
-- příští týden
+Výsledek? Inbox je jen pro věci, které řeším teď.
 
-- v konkrétní datum
+## Odhlásit odběr
 
-Použití v praxi:
+Gmail nově sám pozná newslettery a marketing a nahoře nabídne Odhlásit odběr. Už žádné scrollování e-mailem a hledání titěrného textu unsubscribe.
 
-- faktury → na den splatnosti
-
-- večerní e-mail → na ráno
-
-- newsletter → na páteční odpoledne
-
-Výsledek: inbox bude jen pro věci, které řešíte teď.
-
-## Odhlásit odběr (Unsubscribe)
-
-Gmail sám pozná newslettery a marketing a nahoře nabídne Odhlásit odběr. Už žádné scrollování e-mailem a hledání titěrného textu unsubscribe.
-
-Stačí jeden klik a zbavíte se otravných e-mailů, které jste si v minulosti přihlásili. Ať už chtěně či nechtěně.
+Stačí jeden klik a zbavím se otravných e-mailů, které jsem si v minulosti přihlásili. Ať už chtěně či nechtěně.
 
 ## Naplánovat odeslání
 
-Další skvělá věc. E-mail napíšete teď, ale odešle se po víkendu, ve středu v 8:03 nebo po pracovní době.
+Další skvělá věc, která tolik nesouvisí s Inbox Zero, ale za mě je to jedna z top funkcí. E-mail napíšu teď, ale odešle se po víkendu, ve středu v 8:03 nebo po pracovní době.
 
-Pokud zrovna vystavujete faktury a potřebujete je odeslat až v daný den, připravte si je už dnes a jen naplánute odeslání.
+Pokud zrovna vystavuju faktury a potřebuju je odeslat až v daný den, připravím si e-maily hned a jen naplánuju odeslání.
 
 ## Vrátit odeslání
 
-Do 30 sekund stáhnete špatného adresáta, zapomenutou přílohu nebo trapný překlep.
+Nebo naopak v případě špatného adresáta, zapomenuté přílohy nebo trapného překlepu můžu odeslání e-mailu do 30 sekund stáhnout.
 
 ## Štítky + filtry
 
-Automatické třídění do štítků:
+Další věc, kterou používám hodně, jsou štítky. Třídím si tak e-maily, ke kterým se chci nebo potřebuju vrátit. Mám například stálý štítek Cestování a jakmile řešíme dovolenou například ve Španělsku, vytvořím si další vnořený štítek a přesouvám tam příslušné e-maily.
 
-- faktury → Finance
-
-- objednané zboží → Obchod
-
-- newslettery → Archiv
-
-Inbox se čistí sám.
+Štítky pak skvěle fungují ve spolupráci s automatickým tříděním. Veškeré objednávky zboží přesouvám do Obchodu, faktury do Financí a podobně. Inbox se čistí sám.
 
 ## Bonus tip: jmeno.prijmeni+něco@gmail.com
 
-Na konec jeden z nejpraktičtějších triků.
+Na konec jeden z nejpraktičtějších triků. Ke své adrese můžete přidat +cokoli:
 
-Ke své adrese můžeš přidat:
-
-- 
-
-- ✅ okamžité filtrování podle +slova
-
-- ✅ zjistíš, kdo tvůj mail předal dál
-
-- ✅ oddělíš projekty
-
-- ✅ lepší kontrola nad registracemi
-
-Uděláš filtr na „+eshop“ a maily se samy třídí. Hotovo.
+Například +eshop používám při registraci v eshopech. K tomu mám připojený automatický filtr a štítek Obchody. E-maily se samy třídí. Hotovo.
