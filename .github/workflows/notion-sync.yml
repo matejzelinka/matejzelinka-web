@@ -3,7 +3,7 @@ name: Sync Notion → Build → Deploy
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"
+  - cron: "0 5 * * *"
 
 jobs:
   sync-build-deploy:
