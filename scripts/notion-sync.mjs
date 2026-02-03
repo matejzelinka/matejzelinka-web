@@ -171,9 +171,15 @@ async function blocksToMarkdown(
           renderRichText(block.numbered_list_item.rich_text);
         break;
 
-      case "quote":
-        md = "> " + renderRichText(block.quote.rich_text);
+      /* ---------- QUOTE ---------- */
+
+      case "quote": {
+        const text = renderRichText(block.quote.rich_text);
+        md = `<blockquote class="notion-quote">${text}</blockquote>`;
         break;
+      }
+
+      /* ---------- CALLOUT ---------- */
 
       case "callout": {
         const emoji = block.callout.icon?.emoji ?? "💡";
@@ -189,6 +195,8 @@ async function blocksToMarkdown(
         break;
       }
 
+      /* ---------- CODE ---------- */
+
       case "code": {
         const lang = block.code.language || "";
         const code = block.code.rich_text
@@ -196,6 +204,27 @@ async function blocksToMarkdown(
           .join("");
 
         md = `\n\`\`\`${lang}\n${code}\n\`\`\``;
+        break;
+      }
+
+      /* ---------- DIVIDER ---------- */
+
+      case "divider":
+        md = "\n---\n";
+        break;
+
+      /* ---------- TABLE ---------- */
+
+      case "table":
+        md = `<table class="notion-table">`;
+        break;
+
+      case "table_row": {
+        const cells = block.table_row.cells
+          .map((cell) => `<td>${renderRichText(cell)}</td>`)
+          .join("");
+
+        md = `<tr>${cells}</tr>`;
         break;
       }
     }
@@ -209,6 +238,10 @@ async function blocksToMarkdown(
       );
 
       md += "\n\n" + childMd;
+    }
+
+    if (block.type === "table") {
+      md += "\n</table>";
     }
 
     if (md) parts.push(md);
