@@ -26,6 +26,8 @@ Píšu prompt: ”Napiš mi e-mail, ve kterém odpovím klientovi, že se zpozd�
 
 Ejhle, odpovídá nějak jinak. Do okna E-mail.
 
+![](/images/blog/psaní-emailu-v-chatgpt-0.png)
+
 Říkám si: “Super, to vypadá dobře. Lépe se v tom orientuje - vidím předmět a tělo zvlášť. I ten obsah vypadá dobře, tak ho prostě zkopíruju a odešlu.”
 
 Když to chci udělat, tak na mě vyskočí mini okno - “vyžádat změny, B, I”. Aha, text se dá upravovat přímo v tomhle e-mailovém okně místo psaní dalšího promptu. Dobře, tak to zkusím a upravím ho.
