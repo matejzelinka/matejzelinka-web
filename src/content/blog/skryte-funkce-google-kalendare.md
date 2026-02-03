@@ -54,4 +54,8 @@ V nastavení lze určit pracovní dobu a dny. Když se někdo pokusí naplánova
 
 Velmi užitečné v týmech a organizacích, kde se jinak meetingy snadno rozlézají do večerů.
 
+
+---
+
+
 Google Kalendář není jen obyčejný plánovač. Při správném nastavení se z něj stává řídicí centrum pro projekty, kampaně, produkci akcí i osobní time-management.

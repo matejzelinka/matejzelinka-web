@@ -40,6 +40,10 @@ Další věc, kterou používám hodně, jsou štítky. Třídím si tak e-maily
 
 Štítky pak skvěle fungují ve spolupráci s automatickým tříděním. Veškeré objednávky zboží přesouvám do Obchodu, faktury do Financí a podobně. Inbox se čistí sám.
 
+
+---
+
+
 ## Bonus tip
 
 Na konec jeden z nejpraktičtějších triků. Ke své adrese můžete přidat +cokoli:

@@ -34,13 +34,13 @@ Když to chci udělat, tak na mě vyskočí mini okno - “vyžádat změny, B, 
 
 Označím odstavec
 
-> Jakmile budu mít potvrzený přesný nový termín, obratem Vám jej pošlu.
+<blockquote class="notion-quote">Jakmile budu mít potvrzený přesný nový termín, obratem Vám jej pošlu.</blockquote>
 
 Do mini okna napíšu: *“víc rozveď a napiš to humorně”*.
 
 Okamžitě vidím
 
-> Jakmile budu mít potvrzený přesný nový termín, pošlu Vám ho rychleji než pošťák s kávou v ruce – slibuji, že tentokrát už žádné zpoždění nebude, a pokud ano, alespoň Vám pošlu vtipný GIF jako omluvu.
+<blockquote class="notion-quote">Jakmile budu mít potvrzený přesný nový termín, pošlu Vám ho rychleji než pošťák s kávou v ruce – slibuji, že tentokrát už žádné zpoždění nebude, a pokud ano, alespoň Vám pošlu vtipný GIF jako omluvu.</blockquote>
 
 To je lepší. Přijmu změny a mám připraveno ke kopírování a odeslání.
 
