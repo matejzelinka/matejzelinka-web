@@ -43,6 +43,27 @@ function getFile(prop) {
     : file.file.url;
 }
 
+/* ---------- Rich text renderer ---------- */
+
+function renderRichText(rich) {
+  return rich
+    .map((t) => {
+      let txt = t.plain_text;
+
+      if (t.annotations?.bold) txt = `**${txt}**`;
+      if (t.annotations?.italic) txt = `*${txt}*`;
+      if (t.annotations?.code) txt = `\`${txt}\``;
+      if (t.annotations?.strikethrough) txt = `~~${txt}~~`;
+
+      if (t.href) {
+        txt = `[${txt}](${t.href})`;
+      }
+
+      return txt;
+    })
+    .join("");
+}
+
 /* ================= CONTENT ================= */
 
 async function fetchBlockTree(blockId) {
@@ -105,9 +126,7 @@ async function blocksToMarkdown(
 
     switch (block.type) {
       case "paragraph":
-        md = block.paragraph.rich_text
-          .map((t) => t.plain_text)
-          .join("");
+        md = renderRichText(block.paragraph.rich_text);
         break;
 
       case "image": {
@@ -127,52 +146,58 @@ async function blocksToMarkdown(
       }
 
       case "heading_1":
-        md =
-          "# " +
-          block.heading_1.rich_text.map((t) => t.plain_text).join("");
+        md = "# " + renderRichText(block.heading_1.rich_text);
         break;
 
       case "heading_2":
-        md =
-          "## " +
-          block.heading_2.rich_text.map((t) => t.plain_text).join("");
+        md = "## " + renderRichText(block.heading_2.rich_text);
         break;
 
       case "heading_3":
-        md =
-          "### " +
-          block.heading_3.rich_text.map((t) => t.plain_text).join("");
+        md = "### " + renderRichText(block.heading_3.rich_text);
         break;
 
       case "bulleted_list_item":
         md =
           "  ".repeat(depth) +
           "- " +
-          block.bulleted_list_item.rich_text
-            .map((t) => t.plain_text)
-            .join("");
+          renderRichText(block.bulleted_list_item.rich_text);
         break;
 
       case "numbered_list_item":
         md =
           "  ".repeat(depth) +
           "1. " +
-          block.numbered_list_item.rich_text
-            .map((t) => t.plain_text)
-            .join("");
+          renderRichText(block.numbered_list_item.rich_text);
         break;
 
       case "quote":
-        md =
-          "> " +
-          block.quote.rich_text.map((t) => t.plain_text).join("");
+        md = "> " + renderRichText(block.quote.rich_text);
         break;
 
-      case "callout":
-        md =
-          "> 💡 " +
-          block.callout.rich_text.map((t) => t.plain_text).join("");
+      case "callout": {
+        const emoji = block.callout.icon?.emoji ?? "💡";
+        const text = renderRichText(block.callout.rich_text);
+
+        md = `
+<div class="notion-callout notion-${block.callout.color}">
+  <span class="notion-callout-icon">${emoji}</span>
+  <div class="notion-callout-content">${text}</div>
+</div>
+`.trim();
+
         break;
+      }
+
+      case "code": {
+        const lang = block.code.language || "";
+        const code = block.code.rich_text
+          .map((t) => t.plain_text)
+          .join("");
+
+        md = `\n\`\`\`${lang}\n${code}\n\`\`\``;
+        break;
+      }
     }
 
     if (block.children?.length) {
