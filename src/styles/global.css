@@ -327,3 +327,43 @@
 .carousel-track::-webkit-scrollbar {
   display: none;
 }
+
+/* ===== NOTION CALLOUTS ===== */
+
+.prose .notion-callout {
+  @apply my-6 flex gap-4 rounded-xl border border-white/10 bg-white/5 p-5;
+}
+
+.prose .notion-callout-icon {
+  @apply text-2xl leading-none;
+}
+
+.prose .notion-callout-content {
+  @apply text-slate-200;
+}
+
+/* barvy podle notion typu */
+
+.prose .notion-gray {
+  @apply border-slate-400/30 bg-slate-400/10;
+}
+
+.prose .notion-yellow {
+  @apply border-yellow-400/40 bg-yellow-400/10;
+}
+
+.prose .notion-red {
+  @apply border-red-400/40 bg-red-400/10;
+}
+
+.prose .notion-blue {
+  @apply border-blue-400/40 bg-blue-400/10;
+}
+
+.prose .notion-green {
+  @apply border-emerald-400/40 bg-emerald-400/10;
+}
+
+.prose .notion-purple {
+  @apply border-purple-400/40 bg-purple-400/10;
+}
