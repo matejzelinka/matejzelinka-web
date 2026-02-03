@@ -5,7 +5,7 @@ date: 2026-02-02
 tags:
   - name: "Produktivita"
     color: "orange"
-cover: "https://prod-files-secure.s3.us-west-2.amazonaws.com/bad4ce80-6d38-815e-b21d-0003cc2daa50/4c64a5fa-f161-418f-807d-653500d84cfd/gmail.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466YLPAAJLA%2F20260202%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260202T133908Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEBwaCXVzLXdlc3QtMiJGMEQCIAj7CCA0qSZ0Byth1H8F7ruFgDmw9uaB2n%2F%2BGbNJsbx4AiAUNrAIhdqYly6w6NjFJnlza975WXq750NPUSOvY19xfCqIBAjl%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMxY3ljTpQbPgwSvXJKtwDUMdGk1LLQNR7%2BzmrZLU3w9IOSNGmiBoB86qG1dIQuTwnB7%2BZzz7ZYwnx8PKVOFWVHB0uTFe88rjlg5Opnhr9MCn1ZGJak1VqEs%2FqSWtiDSBfjw2rIW%2FYSrQJOcr%2FHwoS%2FOjARk37qRFNplR9vfD%2BLRB8ImHXeWB4uSxdPCBsNFi8h9eai92sir5PQlfGW94fkQ%2BNeuGt9cTsvPBifGTMqXSMAQAve33WM1eNlNRLkBkUbEvdSzRzgT%2BqUy0xA%2FkjYghj4M9NH16tDCKbW59WvPpnw0tHozF%2BllXEhV1aIWYe5rA5puF1WCMGJhNWPmN7wWg68wnT0FVC2TzB2SONai3fsNIVMT0WSQZjTktjX%2FLKn6sVcMLV8ue0eiKsSc15MhhW6%2Ftvwd7utPMRR%2BWGFmPmfsERkeMebjwoPWpMDY%2Bp0zxnlbQsIzlemwqgWungxTwkMy2K13Y%2FoJ9xvvqSJuBY3BbxM4aHuuMd%2BgKUobexOEEk%2BiCNtLwb90tREhkU2gEOlQ6%2BSdKCsqhuXtEJzLuufEUC99cv1%2Ftf3ttYdyInq%2BLgCKUymgrTthsWzbBGILSHz2RD5jToPbXHRebZsrlZramor037gY4XZ1545AE%2FZo2yADz3ZZrYsKAwrZ2CzAY6pgHABLpSZa25FAKgkSsRsXHyZ2KnIopb6MlmH2AIqQBofl42lHMZySKJFUJuc1VKpmh0WsCGz8YjPVodw3hGeDhOs5Xy8spwNyd8gmUyXwwhRAZUZowI1Ubo8pQV5K496HUYuNMmGCEbiN8KS6IU6%2FTxR0MnuHWQw%2FOgit4OP91odk6Es8hDMstV1V1yoEFtSsmsY5qR84aDLd06WGAcH5LTiMd68CAj&X-Amz-Signature=40d9c69a396e0b5f7ba03adec70677cb2f430619af1cd4121202f52929938615&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"
+cover: "https://prod-files-secure.s3.us-west-2.amazonaws.com/bad4ce80-6d38-815e-b21d-0003cc2daa50/4c64a5fa-f161-418f-807d-653500d84cfd/gmail.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665LN5P7WK%2F20260203%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260203T053520Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEC0aCXVzLXdlc3QtMiJIMEYCIQCbLAeTaCMqJVhFPbmv59evE5hJM1gl7794JJSedgNqPQIhAOpZrYsRiXlgzz9F2TVonVBR35JUdYdeIbonTqWZhmN8KogECPb%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1IgyDx0OstYHXvBLgiDsq3AOIIw5vtQ5gFXkpqE%2BKM1alFhxfLFM6E%2FQob9NPY%2BtGW0IFO7Aity%2FOumUqxQ8YbKbPgWxNicjOkcpFgMQ7nEG8xZVSqbBBdJFO2x3N2PAmDItAZWVzC%2FHqkhIahm15PTeE8HPE8D%2B6TbF3wDokjpTsUy3Ewe%2FdjDe42Fvb8zA7Juv7OQYhzMtMC6zz0LIKXSuroEemOJglEPmRvWagT6Sraf0XCwg%2FYNY6DSQNli9QjYbloqrS4iIW66xIcmvl3VAUPK0BgSUBw8VOUxCVbaTDY%2FT1i59JrReuprQKCGg2%2FpMvP7aP%2B%2BCtnObSa5lHixGCJPHvR%2BpFm814Xncp%2Bssf2o9RryYmMZOq%2BxKljjVM9EeeN07HP5CKGj18u1rNBpbWx1Z3DldMCuHPzg5lBDTjXamMSZGdsMsfHtO6%2BNxd3KMK6KOeW4TlQ0wmeEgOs6X5eMM604tm1XwEcigzJKMdcR1hNuLMAAl10Rh2M9PNW7L%2F4UQEmses%2BQqBNLUDcIWNU1l8k3vPkaHMsA7kp62J71PIhe90jRuY6XPiK%2BenHwzDN3dDEoTIX6dBs4%2FSvW4hXeyEwxXuCIKVGredo7ka6401jLL6vovqyP7mQyzNjjekntub4vYOSadnvDD4%2B4XMBjqkAeh94JKFPxE2K5AlWHQZWe5EnXRLagK2Nm%2BUEi5jnODTqYwYaI5xbz%2FZLomJodWzDmvgeVw3hyRI1m58mM2x4DKWWJy0IZPBgm%2Bnz85f0bLGiJuPtkhVCXIyHRXzd9q6YQikPmlvkVzbO2zg1ehOeOOeaOvGT6RGGCmX3n1VSEyJFw6R%2BV5FSA4FosgFph9Q7VSS2%2FGUBzg0Sh7FekPjhmQ7%2F%2FFh&X-Amz-Signature=0c2cc4a1329f4dd065efdcbb5f95113cc4a78c9939f267961609446c05200058&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"
 seoTitle: "Jak z Gmailu udělat produktivní centrum"
 seoDescription: "gmail, e-mail, mail, inbox zero, google"
 ---
@@ -40,8 +40,12 @@ Další věc, kterou používám hodně, jsou štítky. Třídím si tak e-maily
 
 Štítky pak skvěle fungují ve spolupráci s automatickým tříděním. Veškeré objednávky zboží přesouvám do Obchodu, faktury do Financí a podobně. Inbox se čistí sám.
 
-## Bonus tip: jmeno.prijmeni+něco@gmail.com
+## Bonus tip
 
 Na konec jeden z nejpraktičtějších triků. Ke své adrese můžete přidat +cokoli:
+
+> 💡 jmeno.prijmeni+eshop@gmail.com
+jmeno.prijmeni+prihlaseni@gmail.com
+jmeno.prijmeni+newsletter@gmail.com
 
 Například +eshop používám při registraci v eshopech. K tomu mám připojený automatický filtr a štítek Obchody. E-maily se samy třídí. Hotovo.
