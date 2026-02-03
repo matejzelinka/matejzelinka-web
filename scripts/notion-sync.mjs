@@ -6,6 +6,8 @@ const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 });
 
+const IMAGE_DIR = "public/images/blog";
+const COVER_DIR = "public/images/blog/covers";
 const DATABASE_ID = process.env.NOTION_DB_ID;
 const OUTPUT_DIR = "src/content/blog";
 
@@ -68,6 +70,28 @@ async function fetchBlockTree(blockId) {
 
   return blocks;
 }
+
+async function downloadImage(url, outDir, filenameBase) {
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error(`Image download failed: ${url}`);
+  }
+
+  const buffer = Buffer.from(await res.arrayBuffer());
+
+  const ext =
+    path.extname(new URL(url).pathname) || ".jpg";
+
+  const filename = `${filenameBase}${ext}`;
+  const fullPath = path.join(outDir, filename);
+
+  await fs.mkdir(outDir, { recursive: true });
+  await fs.writeFile(fullPath, buffer);
+
+  return "/" + fullPath.replace(/^public\//, "");
+}
+
 
 function blocksToMarkdown(blocks, depth = 0) {
   return blocks
@@ -195,7 +219,20 @@ async function main() {
     const excerpt = getText(props.Excerpt);
     const date = getDate(props.Date);
     const tags = getMultiSelect(props.Tag);
-    const cover = getFile(props.Cover);
+    
+    let cover = null;
+
+const coverUrl = getFile(props.Cover);
+
+if (coverUrl && slug) {
+  cover = await downloadImage(
+    coverUrl,
+    COVER_DIR,
+    slug
+  );
+}
+
+
     const seoTitle = getText(props["SEO Title"]);
     const seoDescription = getText(props["SEO Description"]);
 
