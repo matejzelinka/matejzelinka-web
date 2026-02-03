@@ -93,7 +93,13 @@ async function downloadImage(url, outDir, filenameBase) {
 }
 
 
-function blocksToMarkdown(blocks, depth = 0) {
+async function blocksToMarkdown(
+  blocks,
+  slug,
+  depth = 0,
+  imageIndex = { i: 0 }
+) {
+
   return blocks
     .map((block) => {
       let md = "";
@@ -104,6 +110,23 @@ function blocksToMarkdown(blocks, depth = 0) {
             .map((t) => t.plain_text)
             .join("");
           break;
+
+case "image": {
+  const url =
+    block.image.type === "external"
+      ? block.image.external.url
+      : block.image.file.url;
+
+  const localPath = await downloadImage(
+    url,
+    IMAGE_DIR,
+    `${slug}-${imageIndex.i++}`
+  );
+
+  md = `![](${localPath})`;
+  break;
+}
+
 
         case "heading_1":
           md =
@@ -239,7 +262,9 @@ if (coverUrl && slug) {
     if (!slug) continue;
 
     const blocks = await fetchBlockTree(page.id);
-    const content = blocksToMarkdown(blocks);
+    
+    const content = await blocksToMarkdown(blocks, slug);
+
 
     const frontmatter = {
       title,
