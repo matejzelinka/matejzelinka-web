@@ -35,7 +35,6 @@ function getMultiSelect(prop) {
   }));
 }
 
-
 function getFile(prop) {
   const file = prop?.files?.[0];
   if (!file) return null;
@@ -80,8 +79,7 @@ async function downloadImage(url, outDir, filenameBase) {
 
   const buffer = Buffer.from(await res.arrayBuffer());
 
-  const ext =
-    path.extname(new URL(url).pathname) || ".jpg";
+  const ext = path.extname(new URL(url).pathname) || ".jpg";
 
   const filename = `${filenameBase}${ext}`;
   const fullPath = path.join(outDir, filename);
@@ -92,6 +90,7 @@ async function downloadImage(url, outDir, filenameBase) {
   return "/" + fullPath.replace(/^public\//, "");
 }
 
+/* ================= MARKDOWN BUILDER ================= */
 
 async function blocksToMarkdown(
   blocks,
@@ -99,92 +98,98 @@ async function blocksToMarkdown(
   depth = 0,
   imageIndex = { i: 0 }
 ) {
+  const parts = [];
 
-  return blocks
-    .map((block) => {
-      let md = "";
+  for (const block of blocks) {
+    let md = "";
 
-      switch (block.type) {
-        case "paragraph":
-          md = block.paragraph.rich_text
+    switch (block.type) {
+      case "paragraph":
+        md = block.paragraph.rich_text
+          .map((t) => t.plain_text)
+          .join("");
+        break;
+
+      case "image": {
+        const url =
+          block.image.type === "external"
+            ? block.image.external.url
+            : block.image.file.url;
+
+        const localPath = await downloadImage(
+          url,
+          IMAGE_DIR,
+          `${slug}-${imageIndex.i++}`
+        );
+
+        md = `![](${localPath})`;
+        break;
+      }
+
+      case "heading_1":
+        md =
+          "# " +
+          block.heading_1.rich_text.map((t) => t.plain_text).join("");
+        break;
+
+      case "heading_2":
+        md =
+          "## " +
+          block.heading_2.rich_text.map((t) => t.plain_text).join("");
+        break;
+
+      case "heading_3":
+        md =
+          "### " +
+          block.heading_3.rich_text.map((t) => t.plain_text).join("");
+        break;
+
+      case "bulleted_list_item":
+        md =
+          "  ".repeat(depth) +
+          "- " +
+          block.bulleted_list_item.rich_text
             .map((t) => t.plain_text)
             .join("");
-          break;
+        break;
 
-case "image": {
-  const url =
-    block.image.type === "external"
-      ? block.image.external.url
-      : block.image.file.url;
+      case "numbered_list_item":
+        md =
+          "  ".repeat(depth) +
+          "1. " +
+          block.numbered_list_item.rich_text
+            .map((t) => t.plain_text)
+            .join("");
+        break;
 
-  const localPath = await downloadImage(
-    url,
-    IMAGE_DIR,
-    `${slug}-${imageIndex.i++}`
-  );
+      case "quote":
+        md =
+          "> " +
+          block.quote.rich_text.map((t) => t.plain_text).join("");
+        break;
 
-  md = `![](${localPath})`;
-  break;
-}
+      case "callout":
+        md =
+          "> 💡 " +
+          block.callout.rich_text.map((t) => t.plain_text).join("");
+        break;
+    }
 
+    if (block.children?.length) {
+      const childMd = await blocksToMarkdown(
+        block.children,
+        slug,
+        depth + 1,
+        imageIndex
+      );
 
-        case "heading_1":
-          md =
-            "# " +
-            block.heading_1.rich_text.map((t) => t.plain_text).join("");
-          break;
+      md += "\n\n" + childMd;
+    }
 
-        case "heading_2":
-          md =
-            "## " +
-            block.heading_2.rich_text.map((t) => t.plain_text).join("");
-          break;
+    if (md) parts.push(md);
+  }
 
-        case "heading_3":
-          md =
-            "### " +
-            block.heading_3.rich_text.map((t) => t.plain_text).join("");
-          break;
-
-        case "bulleted_list_item":
-          md =
-            "  ".repeat(depth) +
-            "- " +
-            block.bulleted_list_item.rich_text
-              .map((t) => t.plain_text)
-              .join("");
-          break;
-
-        case "numbered_list_item":
-          md =
-            "  ".repeat(depth) +
-            "1. " +
-            block.numbered_list_item.rich_text
-              .map((t) => t.plain_text)
-              .join("");
-          break;
-
-        case "quote":
-          md =
-            "> " +
-            block.quote.rich_text.map((t) => t.plain_text).join("");
-          break;
-
-        case "callout":
-          md =
-            "> 💡 " +
-            block.callout.rich_text.map((t) => t.plain_text).join("");
-          break;
-      }
-
-      if (block.children?.length) {
-        md += "\n\n" + blocksToMarkdown(block.children, depth + 1);
-      }
-
-      return md;
-    })
-    .filter(Boolean)
-    .join("\n\n");
+  return parts.join("\n\n");
 }
 
 /* ================= DATA SOURCE ================= */
@@ -242,19 +247,14 @@ async function main() {
     const excerpt = getText(props.Excerpt);
     const date = getDate(props.Date);
     const tags = getMultiSelect(props.Tag);
-    
+
     let cover = null;
 
-const coverUrl = getFile(props.Cover);
+    const coverUrl = getFile(props.Cover);
 
-if (coverUrl && slug) {
-  cover = await downloadImage(
-    coverUrl,
-    COVER_DIR,
-    slug
-  );
-}
-
+    if (coverUrl && slug) {
+      cover = await downloadImage(coverUrl, COVER_DIR, slug);
+    }
 
     const seoTitle = getText(props["SEO Title"]);
     const seoDescription = getText(props["SEO Description"]);
@@ -262,9 +262,8 @@ if (coverUrl && slug) {
     if (!slug) continue;
 
     const blocks = await fetchBlockTree(page.id);
-    
-    const content = await blocksToMarkdown(blocks, slug);
 
+    const content = await blocksToMarkdown(blocks, slug);
 
     const frontmatter = {
       title,
@@ -283,26 +282,22 @@ if (coverUrl && slug) {
         .map(([k, v]) => {
           if (k === "date") return `${k}: ${v}`;
 
-if (Array.isArray(v)) {
-  // pole objektů (např. tags)
-  if (typeof v[0] === "object") {
-    return (
-      `${k}:\n` +
-      v
-        .map(
-          (item) =>
-            `  - name: "${item.name.replace(/"/g, '\\"')}"\n` +
-            `    color: "${item.color}"`
-        )
-        .join("\n")
-    );
-  }
+          if (Array.isArray(v)) {
+            if (typeof v[0] === "object") {
+              return (
+                `${k}:\n` +
+                v
+                  .map(
+                    (item) =>
+                      `  - name: "${item.name.replace(/"/g, '\\"')}"\n` +
+                      `    color: "${item.color}"`
+                  )
+                  .join("\n")
+              );
+            }
 
-  // pole stringů
-  return `${k}: [${v.map((x) => `"${x}"`).join(", ")}]`;
-}
-
-
+            return `${k}: [${v.map((x) => `"${x}"`).join(", ")}]`;
+          }
 
           return `${k}: "${String(v).replace(/"/g, '\\"')}"`;
         })
