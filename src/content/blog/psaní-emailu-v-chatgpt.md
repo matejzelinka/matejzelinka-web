@@ -22,7 +22,7 @@ Nevím, jak dlouho je takhle “funkce” venku. Já na ni narazil teď o víken
 
 Potřebuju napsat e-mail a opět se mi nechce vymýšlet obsah. Použiju AI. Dnes zrovna sáhnu po ChatuGPT.
 
-Píšu prompt: ”Napiš mi e-mail, ve kterém odpovím klientovi, že se zpozdím s dodáním služeb”, ENTER a čekám, co vyplodí.
+Píšu prompt: *”Napiš mi e-mail, ve kterém odpovím klientovi, že se zpozdím s dodáním služeb”, ENTER a *čekám, co vyplodí.
 
 Ejhle, odpovídá nějak jinak. Do okna E-mail.
 
@@ -36,7 +36,7 @@ Označím odstavec
 
 > Jakmile budu mít potvrzený přesný nový termín, obratem Vám jej pošlu.
 
-Do mini okna napíšu: “víc rozveď a napiš to humorně”.
+Do mini okna napíšu: *“víc rozveď a napiš to humorně”*.
 
 Okamžitě vidím
 

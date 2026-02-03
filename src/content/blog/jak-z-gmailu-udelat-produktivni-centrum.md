@@ -20,7 +20,7 @@ Výsledek? Inbox je jen pro věci, které řeším teď.
 
 ## Odhlásit odběr
 
-Gmail nově sám pozná newslettery a marketing a nahoře nabídne Odhlásit odběr. Už žádné scrollování e-mailem a hledání titěrného textu unsubscribe.
+Gmail nově sám pozná newslettery a marketing a nahoře nabídne Odhlásit odběr. Už žádné scrollování e-mailem a hledání titěrného textu unsubscribe**.**
 
 Stačí jeden klik a zbavím se otravných e-mailů, které jsem si v minulosti přihlásili. Ať už chtěně či nechtěně.
 
@@ -44,8 +44,11 @@ Další věc, kterou používám hodně, jsou štítky. Třídím si tak e-maily
 
 Na konec jeden z nejpraktičtějších triků. Ke své adrese můžete přidat +cokoli:
 
-> 💡 jmeno.prijmeni+eshop@gmail.com
-jmeno.prijmeni+prihlaseni@gmail.com
-jmeno.prijmeni+newsletter@gmail.com
+<div class="notion-callout notion-gray_background">
+  <span class="notion-callout-icon">📧</span>
+  <div class="notion-callout-content">jmeno.prijmeni+eshop@gmail.com[
+](mailto:jmeno.prijmeni%2Beshop@gmail.com)jmeno.prijmeni+prihlaseni@gmail.com
+jmeno.prijmeni+newsletter@gmail.com</div>
+</div>
 
 Například +eshop používám při registraci v eshopech. K tomu mám připojený automatický filtr a štítek Obchody. E-maily se samy třídí. Hotovo.

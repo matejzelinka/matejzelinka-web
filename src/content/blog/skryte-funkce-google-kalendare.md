@@ -16,7 +16,7 @@ Vybral jsem přehled pár zajímavých a méně známých vychytávek, které po
 
 Když do adresního řádku prohlížeče napíšete:
 
-cal.new
+**cal.new**
 
 otevře se Google Kalendář rovnou s formulářem nové události. Bez klikání přes menu. Hodí se při telefonátech, rychlém plánování nebo zapisování nápadů, které nechcete zapomenout.
 
