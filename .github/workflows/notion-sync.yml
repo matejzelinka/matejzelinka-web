@@ -38,17 +38,13 @@ jobs:
       - name: Build site
         run: npm run build
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-
-          protocol: ftp
-          timeout: 60000
-          log-level: verbose
-
-          local-dir: dist/
-          server-dir: ${{ secrets.FTP_PATH }}/
-          dangerous-clean-slate: false
+      - name: Deploy via SCP
+  uses: appleboy/scp-action@v0.1.7
+  with:
+    host: ${{ secrets.SSH_HOST }}
+    port: ${{ secrets.SSH_PORT }}
+    username: ${{ secrets.SSH_USER }}
+    password: ${{ secrets.SSH_PASSWORD }}
+    source: "dist/*"
+    target: ${{ secrets.SSH_PATH }}
+    strip_components: 1
