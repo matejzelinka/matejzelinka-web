@@ -48,3 +48,18 @@ jobs:
           remote_port: ${{ secrets.SSH_PORT }}
           remote_user: ${{ secrets.SSH_USER }}
           remote_password: ${{ secrets.SSH_PASSWORD }}
+
+
+      - name: Deploy via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp.matejzelinka.cz
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: sftp
+          port: 222
+
+          local-dir: dist/
+          server-dir: ./
+
+          dangerous-clean-slate: false
