@@ -3,7 +3,7 @@ name: Sync Notion → Build → Deploy
 on:
   workflow_dispatch:
   schedule:
-  - cron: "0 5 * * *"
+    - cron: "0 5 * * *"
 
 jobs:
   sync-build-deploy:
@@ -37,18 +37,6 @@ jobs:
 
       - name: Build site
         run: npm run build
-
-      - name: Deploy via rsync over SSH
-        uses: burnett01/rsync-deployments@v5.2
-        with:
-          switches: -avz
-          path: dist/
-          remote_path: ./
-          remote_host: ${{ secrets.SSH_HOST }}
-          remote_port: ${{ secrets.SSH_PORT }}
-          remote_user: ${{ secrets.SSH_USER }}
-          remote_password: ${{ secrets.SSH_PASSWORD }}
-
 
       - name: Deploy via SFTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
