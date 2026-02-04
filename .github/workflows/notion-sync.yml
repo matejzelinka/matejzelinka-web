@@ -38,13 +38,13 @@ jobs:
       - name: Build site
         run: npm run build
 
-      - name: Deploy via SCP
-        uses: appleboy/scp-action@v0.1.7
+      - name: Deploy via rsync over SSH
+        uses: burnett01/rsync-deployments@v7
         with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          source: "dist/*"
-          target: "."
-          strip_components: 1
+          switches: -avz --delete=false
+          path: dist/
+          remote_path: ./
+          remote_host: ${{ secrets.SSH_HOST }}
+          remote_port: ${{ secrets.SSH_PORT }}
+          remote_user: ${{ secrets.SSH_USER }}
+          remote_password: ${{ secrets.SSH_PASSWORD }}
