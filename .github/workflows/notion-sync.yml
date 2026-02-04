@@ -39,12 +39,12 @@ jobs:
         run: npm run build
 
       - name: Deploy via SCP
-  uses: appleboy/scp-action@v0.1.7
-  with:
-    host: ${{ secrets.SSH_HOST }}
-    port: ${{ secrets.SSH_PORT }}
-    username: ${{ secrets.SSH_USER }}
-    password: ${{ secrets.SSH_PASSWORD }}
-    source: "dist/*"
-    target: ${{ secrets.SSH_PATH }}
-    strip_components: 1
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          source: "dist/*"
+          target: ${{ secrets.SSH_PATH }}
+          strip_components: 1
