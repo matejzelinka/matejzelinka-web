@@ -40,19 +40,15 @@ Další věc, kterou používám hodně, jsou štítky. Třídím si tak e-maily
 
 Štítky pak skvěle fungují ve spolupráci s automatickým tříděním. Veškeré objednávky zboží přesouvám do Obchodu, faktury do Financí a podobně. Inbox se čistí sám.
 
-
----
-
-
 ## Bonus tip
 
 Na konec jeden z nejpraktičtějších triků. Ke své adrese můžete přidat +cokoli:
 
-<div class="notion-callout notion-gray_background">
-  <span class="notion-callout-icon">📧</span>
-  <div class="notion-callout-content">jmeno.prijmeni+eshop@gmail.com[
-](mailto:jmeno.prijmeni%2Beshop@gmail.com)jmeno.prijmeni+prihlaseni@gmail.com
-jmeno.prijmeni+newsletter@gmail.com</div>
-</div>
+
+```javascript
+jmeno.prijmeni+eshop@gmail.com
+jmeno.prijmeni+prihlaseni@gmail.com
+jmeno.prijmeni+newsletter@gmail.com
+```
 
 Například +eshop používám při registraci v eshopech. K tomu mám připojený automatický filtr a štítek Obchody. E-maily se samy třídí. Hotovo.
