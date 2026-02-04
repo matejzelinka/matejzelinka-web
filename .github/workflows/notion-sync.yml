@@ -39,9 +39,9 @@ jobs:
         run: npm run build
 
       - name: Deploy via rsync over SSH
-        uses: burnett01/rsync-deployments@v7
+        uses: burnett01/rsync-deployments@v5.2
         with:
-          switches: -avz --delete=false
+          switches: -avz
           path: dist/
           remote_path: ./
           remote_host: ${{ secrets.SSH_HOST }}
