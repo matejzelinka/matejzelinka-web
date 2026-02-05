@@ -174,16 +174,22 @@ async function blocksToMarkdown(
       /* ---------- QUOTE ---------- */
 
       case "quote": {
-        const text = renderRichText(block.quote.rich_text);
-        md = `<blockquote class="notion-quote">${text}</blockquote>`;
-        break;
-      }
+  const raw = renderRichText(block.quote.rich_text);
+
+  const text = raw.replace(/\n/g, "<br>");
+
+  md = `<blockquote class="notion-quote">${text}</blockquote>`;
+  break;
+}
+
 
       /* ---------- CALLOUT ---------- */
 
       case "callout": {
         const emoji = block.callout.icon?.emoji ?? "💡";
-        const text = renderRichText(block.callout.rich_text);
+        const raw = renderRichText(block.callout.rich_text);
+const text = raw.replace(/\n/g, "<br>");
+
 
         md = `
 <div class="notion-callout notion-${block.callout.color}">
