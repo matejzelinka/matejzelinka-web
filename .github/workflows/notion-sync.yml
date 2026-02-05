@@ -48,11 +48,8 @@ jobs:
           port: 21
       
           local-dir: dist/
-<<<<<<< HEAD
           server-dir: public_html/
-=======
           server-dir: ./
->>>>>>> dcb57d4 (Fix Notion quote line breaks)
       
           dangerous-clean-slate: false
 
