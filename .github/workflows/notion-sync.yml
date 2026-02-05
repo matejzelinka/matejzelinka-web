@@ -49,7 +49,6 @@ jobs:
       
           local-dir: dist/
           server-dir: public_html/
-          server-dir: ./
       
           dangerous-clean-slate: false
 
