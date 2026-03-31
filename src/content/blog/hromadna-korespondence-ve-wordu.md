@@ -58,19 +58,7 @@ Příklad tabulky:
 
 Ve Wordu vytvořte nový soubor a napište celý text dopisu:
 
-<blockquote class="notion-quote">Jan Novák
-Masarykova 159
-110 00 Praha
-
-Oznámení ve věci řízení
-
-Vážený pane,
-městský úřad Vás tímto informuje, že ve věci vedené pod spisovou značkou 26/12 bylo zahájeno řízení.
-
-Podrobné informace Vám budou sděleny samostatně, případně je můžete získat na správním odboru.
-
-S pozdravem
-Šikovný Úředník</blockquote>
+<blockquote class="notion-quote">Jan Novák<br>Masarykova 159<br>110 00 Praha<br><br>Oznámení ve věci řízení<br><br>Vážený pane,<br>městský úřad Vás tímto informuje, že ve věci vedené pod spisovou značkou 26/12 bylo zahájeno řízení.<br><br>Podrobné informace Vám budou sděleny samostatně, případně je můžete získat na správním odboru.<br><br>S pozdravem<br>Šikovný Úředník</blockquote>
 
 Předtím, jste určitě pracně kopírovali a vkládali (pokud jste je nepsali rovnou) potřebná data a jednotlivé dopisy tiskli. Nedej bože na někoho zapomenut nebo přeskočit tisk.
 
@@ -98,19 +86,7 @@ Do míst, kde mají být osobní údaje, vložte tzv. slučovací pole:
 
 Výsledkem bude:
 
-<blockquote class="notion-quote">«jmeno» «prijmeni»
-«ulice» «c.p.»
-«psc» «mesto»
-
-Oznámení ve věci řízení
-
-«osloveni»,
-městský úřad Vás tímto informuje, že ve věci vedené pod spisovou značkou «znacka» bylo zahájeno řízení.
-
-Podrobné informace Vám budou sděleny samostatně, případně je můžete získat na správním odboru.
-
-S pozdravem
-Šikovný Úředník</blockquote>
+<blockquote class="notion-quote">«jmeno» «prijmeni»<br>«ulice» «c.p.»<br>«psc» «mesto»<br><br>Oznámení ve věci řízení<br><br>«osloveni»,<br>městský úřad Vás tímto informuje, že ve věci vedené pod spisovou značkou «znacka» bylo zahájeno řízení.<br><br>Podrobné informace Vám budou sděleny samostatně, případně je můžete získat na správním odboru.<br><br>S pozdravem<br>Šikovný Úředník</blockquote>
 
 <div class="notion-callout notion-gray_background">
   <span class="notion-callout-icon">💡</span>
